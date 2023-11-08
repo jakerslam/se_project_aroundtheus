@@ -20,4 +20,5 @@ The way you'll do this at work is by exporting images directly from Figma — we
   
 Good luck and have fun!
 
-**Github pages link**  
+Github pages
+*[Github pages link](https://jakerslam.github.io/se_project_aroundtheus/)
