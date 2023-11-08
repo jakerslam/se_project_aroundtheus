@@ -1,0 +1,52 @@
+
+
+.card {
+    width: 282px;
+    height: 361px;
+    list-style: none;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.card__img {
+
+    width: 282px;
+    height: 282px;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.card__title {
+}
+
+.card__line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px 0px 20px;
+}
+
+.card__heart-button {
+    height: 18px;
+    width: 28px;
+    transition: opacity .2s linear;
+    display: flex;
+    justify-content: right;
+}
+
+.card__heart-button:hover {
+    opacity: 50%;;
+}
+
+
+@media screen  and (min-width: 380px) and (max-width: 799px) {
+
+    .card {
+        justify-self: center;
+    }    
+}
+

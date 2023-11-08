@@ -1,0 +1,60 @@
+.cards {
+    display: grid;
+    padding: 0px;
+    margin: 0px;
+    margin-bottom: 30px;
+}
+
+@media screen  and (min-width: 380px) and (max-width: 799px) {
+    .cards {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+        "card";
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        gap: 15px
+        
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .cards {
+        display: grid;
+        gap: 20px;
+        justify-content: center;
+        grid-template-areas: 
+        "card card"
+        "card card"
+        "card card";
+        
+    }
+
+    .card {
+        justify-self: center;
+    }
+    
+}
+
+@media screen and (min-width:1280px) {
+    .page {
+        width:880px;
+        margin:auto;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas: 
+        "card card card";
+        justify-content: space-between;
+        gap: 15px;
+        padding: 0px;
+        margin: 0px;
+        
+        
+    }
+}
