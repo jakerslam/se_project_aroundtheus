@@ -1,8 +1,8 @@
 .header {
-    border-bottom: 0.5px solid gray;
-    width: 100;
+    border-bottom: 0.7x solid gray;
+    max-width: 100;
     margin-top: 45px;
-    height: 74px;
+    min-height: 74px;
 }
 
 
