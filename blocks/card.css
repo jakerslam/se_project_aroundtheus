@@ -1,8 +1,6 @@
-
-
 .card {
-    width: 282px;
-    height: 361px;
+    max-width: 282px;
+    max-height: 361px;
     list-style: none;
     border-radius: 10px;
     background-color: white;
@@ -35,7 +33,15 @@
     width: 28px;
     transition: opacity .2s linear;
     display: flex;
-    justify-content: flex-end;
+    background: none;
+    justify-self: flex-end;
+    align-self: center;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	outline: inherit;
+    margin-right:10px ;
 }
 
 .card__heart-button:hover {
