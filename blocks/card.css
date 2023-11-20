@@ -1,8 +1,8 @@
 
 
 .card {
-    max-width: 282px;
-    min-height: 361px;
+    width: 282px;
+    height: 361px;
     list-style: none;
     border-radius: 10px;
     background-color: white;
@@ -17,11 +17,10 @@
     width: 282px;
     height: 282px;
     border-radius: 10px 10px 0px 0px;
-    object-fit:cover;
 }
 
-.card__title {
-}
+/*.card__title {
+}*/
 
 .card__line {
     display: flex;
@@ -32,17 +31,11 @@
 }
 
 .card__heart-button {
-    background: none;
     height: 18px;
     width: 28px;
     transition: opacity .2s linear;
     display: flex;
-    justify-content: right;
-	color: inherit;
-	border: none;
-	padding: 0;
-	font: inherit;
-	outline: inherit;
+    justify-content: flex-end;
 }
 
 .card__heart-button:hover {
@@ -56,4 +49,3 @@
         justify-self: center;
     }    
 }
-
