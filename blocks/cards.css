@@ -3,42 +3,9 @@
     padding: 0px;
     margin: 0px;
     margin-bottom: 30px;
-}
 
-@media screen  and (min-width: 380px) and (max-width: 799px) {
-    .cards {
-        
-         /*display: grid;
-       grid-template-columns: 1fr;
-        grid-template-rows: auto;
-        grid-template-areas: 
-        "card";
-        justify-content: center;
-        align-items: center;
-        margin: auto;*/
-        gap: 15px
-    }
-}
-
-@media screen and (min-width: 800px) {
-    .cards {
-        gap: 20px;
-        justify-content: center;
-        grid-template-areas: 
-        "card card"
-        "card card"
-        "card card";
-        
-    }
-
-
-    /*.card {
-        justify-self: center;
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-    }*/
-    
+    row-gap: 20px;
+    column-gap: 17px;
 }
 
 @media screen and (min-width:1280px) {
@@ -49,10 +16,47 @@
         grid-template-areas: 
         "card card card";
         justify-content: space-between;
-        gap: 15px;
         padding: 0px;
         margin: 0px;
         
         
     }
+}
+
+@media screen and (min-width: 800px) {
+    .cards {
+        justify-content: center;
+        grid-template-areas: 
+        "card card"
+        "card card"
+        "card card";
+        
+    }
+}
+
+@media screen  and (min-width: 320px) and (max-width: 799px) {
+    .cards {
+        
+        justify-content: center;
+         /*display: grid;
+       grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+        "card";
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        gap: 15px;*/
+    }
+
+
+
+
+    /*.card {
+        justify-self: center;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+    }*/
+    
 }
