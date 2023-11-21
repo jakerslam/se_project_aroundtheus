@@ -18,20 +18,27 @@
       <img src="images/around-us.svg" alt="Around the US logo" />
     </header>
     <main>
-        <div class="profile">
-            <img class="profile__author-img" src="images/Avatar.png" alt="Photo of the author">
-            <!--Nikolay Gavriushin, I went to community office hours 
-                and they said these divs were the way that they'd do it, 
-                and they didn't have a better way to align the button and title 
-                in mobile view without using javascript, they said similar about the card div I used-->
-            <div class="profile__title-line">
-            <h1 class="profile__author-title">Jacques Coustea
-                </h1>
-            <img src="images/edit-button.png" class="profile__edit-button" alt="photo edit button">
-            <p class="profile__subtext">Adventurer</p>
-            </div>
-            <button class="profile__add-button" type="button"><img src="images/plusVector.svg" class="profile__add-button-img" alt="add button"></button>
+      <div class="profile">
+        <img
+          class="profile__author-img"
+          src="images/Avatar.png"
+          alt="Photo of the author"
+        />
+        <div class="profile__title-line">
+          <h1 class="profile__author-title">Jacques Coustea</h1>
+          <button type="button" class="profile__edit-button">
+            <img src="images/edit-button.png" alt="photo edit button" />
+          </button>
+          <p class="profile__subtext">Adventurer</p>
         </div>
+        <button class="profile__add-button" type="button">
+          <img
+            src="images/plusVector.svg"
+            class="profile__add-button-img"
+            alt="add button"
+          />
+        </button>
+      </div>
       <ul class="cards">
         <li class="cards__card card">
           <img
@@ -40,41 +47,19 @@
             alt="Photo of the Bald Mountains"
           />
           <div class="card__line">
-          <h2 class="card__title">Bald Mountains</h2>
-          <button type="button" class="card__heart-button">
-            <img src="images/heart-icon.svg" alt="like button" />
-          </button>
+            <h2 class="card__title">Bald Mountains</h2>
+            <button type="button" class="card__heart-button">
+              <img src="images/heart-icon.svg" alt="like button" />
+            </button>
           </div>
         </li>
         <li class="cards__card card">
           <img class="card__img" src="images/lago.jpg" alt="Photo of lago" />
           <div class="card__line">
-          <h2 class="card__title">Lago</h2>
-          <button type="button" class="card__heart-button">
-            <img src="images/heart-icon.svg" alt="like button" />
-          </button>
-          </div>
-        </li>
-        <li class="cards__card card">
-          <img
-            class="card__img"
-            src="images/lake-louise.jpg"
-            alt="Photo of lago"
-          />
-          <div class="card__line">
-          <h2 class="card__title">Lago</h2>
-          <button type="button" class="card__heart-button">
-            <img src="images/heart-icon.svg" alt="like button" />
-          </button>
-          </div>
-        </li>
-        <li class="cards__card card">
-          <img class="card__img" src="images/latemar.jpg" alt="Photo of lago" />
-          <div class="card__line">
-          <h2 class="card__title">Lago</h2>
-          <button type="button" class="card__heart-button">
-            <img src="images/heart-icon.svg" alt="like button" />
-          </button>
+            <h2 class="card__title">Lago</h2>
+            <button type="button" class="card__heart-button">
+              <img src="images/heart-icon.svg" alt="like button" />
+            </button>
           </div>
         </li>
         <li class="cards__card card">
@@ -84,10 +69,10 @@
             alt="Photo of Lake Louise"
           />
           <div class="card__line">
-          <h2 class="card__title">Lake Louise</h2>
-          <button type="button" class="card__heart-button">
-            <img src="images/heart-icon.svg" alt="like button" />
-          </button>
+            <h2 class="card__title">Lake Louise</h2>
+            <button type="button" class="card__heart-button">
+              <img src="images/heart-icon.svg" alt="like button" />
+            </button>
           </div>
         </li>
         <li class="cards__card card">
@@ -98,10 +83,10 @@
           />
 
           <div class="card__line">
-          <h2 class="card__title">Latemar</h2>
-          <button type="button" class="card__heart-button">
-            <img src="images/heart-icon.svg" alt="like button" />
-          </button>
+            <h2 class="card__title">Latemar</h2>
+            <button type="button" class="card__heart-button">
+              <img src="images/heart-icon.svg" alt="like button" />
+            </button>
           </div>
         </li>
         <li class="cards__card card">
@@ -112,10 +97,10 @@
           />
 
           <div class="card__line">
-          <h2 class="card__title">Vanoise</h2>
-          <button type="button" class="card__heart-button">
-            <img src="images/heart-icon.svg" alt="like button" />
-          </button>
+            <h2 class="card__title">Vanoise</h2>
+            <button type="button" class="card__heart-button">
+              <img src="images/heart-icon.svg" alt="like button" />
+            </button>
           </div>
         </li>
         <li class="cards__card card">
@@ -126,10 +111,10 @@
           />
 
           <div class="card__line">
-          <h2 class="card__title">Yosemite</h2>
-          <button type="button" class="card__heart-button">
-            <img src="images/heart-icon.svg" alt="like button" />
-          </button>
+            <h2 class="card__title">Yosemite</h2>
+            <button type="button" class="card__heart-button">
+              <img src="images/heart-icon.svg" alt="like button" />
+            </button>
           </div>
         </li>
       </ul>

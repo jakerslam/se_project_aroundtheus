@@ -1,13 +1,10 @@
 .card {
     max-width: 282px;
-    max-height: 361px;
+    min-height: 361px;
     list-style: none;
     border-radius: 10px;
     background-color: white;
     color: black;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
 }
 
 .card__img {
@@ -28,6 +25,12 @@
     padding: 0px 20px 0px 20px;
 }
 
+.card__title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 .card__heart-button {
     height: 18px;
     width: 28px;
@@ -45,7 +48,8 @@
 }
 
 .card__heart-button:hover {
-    opacity: 50%;;
+    opacity: 50%;
+    cursor: pointer;
 }
 
 
