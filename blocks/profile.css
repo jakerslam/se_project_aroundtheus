@@ -67,8 +67,8 @@
 
 .profile__subtext {
     margin: 0px;
-    display: flex;
-    justify-self: flex-start;
+    /*justify-self: flex-start;
+    display: flex;*/
     flex-basis: 100%;
     font-weight: 400;
     font-size: 18px; 
@@ -105,10 +105,6 @@
         margin-bottom: 36px;
     }
 
-    .profile__add-button  {
-        max-width: 282px;
-        height: 50px;
-    }
 
     .profile__title-line {
         justify-self: center;
@@ -125,15 +121,13 @@
 
     .profile__subtext {
         margin: 0px;
-        justify-self: center;
-        justify-content: center;
+        text-align: center;
         font-size: 14px;
         padding-top: 14px;
     }
 
     .profile__add-button {
         width: 282px;
-        max-width: 100;
         min-height: 50px;
     }
 
