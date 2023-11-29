@@ -1,4 +1,23 @@
+let editButton = document.querySelector(".profile__edit-button");
+let modalCloseButton = document.querySelector(".modal__container-close-button");
+let modal =  document.querySelector(".modal");
 
+editButton.addEventListener("click", openModalBox);
+modalCloseButton.addEventListener("click", closeModalBox);
+
+function openModalBox() {
+    console.log("called openModalBox()");
+    modal.classList.remove("modal-hidden");
+
+    console.log("Modal class list after openModalBox(): " + modal.classList);
+}
+
+function closeModalBox(event) {
+    event.preventDefault();
+    console.log("called closeModalBox()")
+    modal.classList.add("modal-hidden");
+    console.log("Modal class list after closeModalBox(): " + modal.classList);
+}
 
 let cardData1 = {
     name: "Yosemite Valley",
