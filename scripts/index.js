@@ -76,13 +76,16 @@ function openModalBox() {
 }
 editButton.addEventListener("click", openModalBox);
 
-function modalSave() {
-    //event.preventDefault();
+function modalSave(event) {
+    event.preventDefault;
+    console.log("calling modalSave()");
     currentName.textContent = nameInput.value;
     currentBio.textContent = bioInput.value;
-    closeModalBox();
+    console.log(currentName.textContent);
+    console.log(currentBio.textContent);
+    closeModalBox(event);
 }
-document.querySelector(".modal__container").addEventListener("submit", modalSave);
+modal.querySelector(".modal__form").addEventListener("submit", modalSave);
 
 function closeModalBox(event) {
     event.preventDefault();

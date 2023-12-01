@@ -11,8 +11,13 @@
     justify-content: center;
     margin: auto;
 }
-
 .modal__container {
+
+    display: flex;
+    align-self: center;
+    justify-self: center;
+}
+.modal__form {
     /*position: fixed;*/
     display: flex;
     align-self: center;
@@ -102,7 +107,7 @@
 }
 
 @media screen  and (min-width: 320px) and (max-width: 799px) {
-    .modal__container {
+    .modal__form {
         max-width: 282px;
         padding-top: 15px;
         padding-bottom: 15px;
