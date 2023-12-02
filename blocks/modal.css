@@ -12,7 +12,7 @@
     margin: auto;
 }
 .modal__container {
-
+    position: relative;
     display: flex;
     align-self: center;
     justify-self: center;
@@ -32,7 +32,7 @@
     text-align: left;
     border-radius: 10px;
     z-index: 3;
-    padding: auto;
+    /*padding: auto;*/
     padding-top: 20px;
     padding-bottom: 20px;
 }
@@ -65,8 +65,9 @@
 .modal__container-input {
     font-weight: 400;
     font-size: 14px;
+    line-height: 17px;
     border: none;
-    border-bottom: rgba(0, 0, 0, 0.2) 0.5px solid;
+    border-bottom: rgba(0, 0, 0, 0.2) 1px solid;
     width: 358px;
     padding: 10px 0px 10px 0px;
     margin-bottom: 30px;
@@ -75,8 +76,8 @@
 
 .modal__container-close-button { /*close button wacked up after  chaning modal box from absolute*/
     position: absolute;
-    top:140px;
-    left:930px;  
+    top:-50px;
+    left:430px;  
     right: 1px;
 	color: inherit;
 	border: none;
@@ -89,6 +90,10 @@
     height: 40px;
     width: 40px;
     cursor: pointer;
+    background-image: url("../images/close-icon.svg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
 }
 
 .modal__container-close-button:hover {
@@ -109,30 +114,33 @@
 @media screen  and (min-width: 320px) and (max-width: 799px) {
     .modal__form {
         max-width: 282px;
-        padding-top: 15px;
-        padding-bottom: 15px;
+        padding-top: 25px; /*vs 15px*/
+        padding-bottom: 25px;
     }
 
     .modal__container-input {
         max-width: 238px;
-        font-size: 14px;
+        line-height: 16px;
     }
 
     .modal__container-header {
         margin-left: 22px;
         font-size: 18px;
         line-height: 21px;
-        margin-bottom: 60px;
+        margin-bottom: 70px;
     }
     .modal__container-button {
         /*left:430px; */
         font-size: 14px;
+        line-height: 17px;
         max-width: 238px;
 
     }
 
     .modal__container-close-button {
-        top:50px; 
-        left:250px; 
+        width: 26px;
+        height:26px;
+        top:-30px; 
+        left:260px; 
     }
  }

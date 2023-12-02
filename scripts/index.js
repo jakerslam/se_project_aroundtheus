@@ -31,8 +31,8 @@ const initialCards = [
 
 const cardTemplate = document.querySelector("#cardTemplate").content;
 const cardDeck = document.querySelector('.cards');
-function getCardElement(card){
-    
+
+function getCardElement(card){  
         const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
         const imageLink = card.link;
         cardElement.querySelector(".card__img").src = imageLink;
@@ -78,11 +78,8 @@ editButton.addEventListener("click", openModalBox);
 
 function modalSave(event) {
     event.preventDefault;
-    console.log("calling modalSave()");
     currentName.textContent = nameInput.value;
     currentBio.textContent = bioInput.value;
-    console.log(currentName.textContent);
-    console.log(currentBio.textContent);
     closeModalBox(event);
 }
 modal.querySelector(".modal__form").addEventListener("submit", modalSave);

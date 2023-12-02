@@ -15,29 +15,27 @@
   </head>
 
   <body class="page">
-
     <div class="modal modal_hidden">
       <div class="modal__container">
-      <form class="modal__form">
         <button class="modal__container-close-button" type="button">
-          <img src="images/close-icon.svg" alt="photo edit button" />
+          <!--<img src="images/close-icon.svg" alt="photo edit button" />-->
         </button>
-        <h3 class="modal__container-header">Edit Profile</h3>
-        <input
-          type="text"
-          class="modal__container-input modal__container-input_name"
-          placeholder="Name"
-        />
-        <input
-          type="text"
-          class="modal__container-input modal__container-input_bio"
-          placeholder="Bio"
-        />
-        <input type="submit" value="Save" class="modal__container-button" />
-      </form>
+        <form class="modal__form">
+          <h3 class="modal__container-header">Edit Profile</h3>
+          <input
+            type="text"
+            class="modal__container-input modal__container-input_name"
+            placeholder="Name"
+          />
+          <input
+            type="text"
+            class="modal__container-input modal__container-input_bio"
+            placeholder="Bio"
+          />
+          <input type="submit" value="Save" class="modal__container-button" />
+        </form>
+      </div>
     </div>
-    </div>
-
     <header class="header">
       <img
         src="images/around-us.svg"
@@ -45,6 +43,7 @@
         alt="Around the US logo"
       />
     </header>
+
     <main class="page__main">
       <div class="profile">
         <img
@@ -73,34 +72,23 @@
       </div>
 
       <ul class="cards">
-
         <template id="cardTemplate">
           <li class="cards__card card">
-          <img
-            class="card__img"
-            src=""
-            alt=""
-          />
-          <div class="card__line">
-            <h2 class="card__title"></h2>
-            <button type="button" class="card__heart-button">
-              <img src="images/heart-icon.svg" alt="like button" />
-            </button>
-          </div>
-        </li>
+            <img class="card__img" src="" alt="" />
+            <div class="card__line">
+              <h2 class="card__title"></h2>
+              <button type="button" class="card__heart-button">
+                <img src="images/heart-icon.svg" alt="like button" />
+              </button>
+            </div>
+          </li>
         </template>
-
       </ul>
-
     </main>
     <footer class="footer">
       <p class="footer__copyright">© 2022 Around The U.S.</p>
     </footer>
 
-    
     <script src="scripts/index.js"></script>
-
-
   </body>
-  
 </html>
