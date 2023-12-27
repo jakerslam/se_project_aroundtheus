@@ -15,7 +15,8 @@
   </head>
 
   <body class="page">
-    <div class="modal modal_hidden">
+
+    <div class="modal modal_hidden" id="edit-modal">
       <div class="modal__container">
         <button class="modal__container-close-button" type="button">
           <!--<img src="images/close-icon.svg" alt="photo edit button" />-->
@@ -36,6 +37,29 @@
         </form>
       </div>
     </div>
+
+    <div class="modal modal_hidden" id="card-modal">
+      <div class="modal__container">
+        <button class="modal__container-close-button" type="button">
+          <!--<img src="images/close-icon.svg" alt="photo edit button" />-->
+        </button>
+        <form class="modal__form">
+          <h3 class="modal__container-header">New Place</h3>
+          <input
+            type="text"
+            class="modal__container-input modal__container-input_field_name"
+            placeholder="Name"
+          />
+          <input
+            type="text"
+            class="modal__container-input modal__container-input_field_bio"
+            placeholder="Bio"
+          />
+          <input type="submit" value="Save" class="modal__container-button" />
+        </form>
+      </div>
+    </div>
+
     <header class="header">
       <img
         src="images/around-us.svg"

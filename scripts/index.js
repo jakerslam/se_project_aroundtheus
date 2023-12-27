@@ -1,4 +1,5 @@
 
+
 //Card functions
 
 const initialCards = [
@@ -43,9 +44,12 @@ function getCardElement(card){
 }
 
 function renderCards() {
-    for (let i=0; i < initialCards.length;i++) {
+    /*for (let i=0; i < initialCards.length;i++) {
         cardDeck.append(getCardElement(initialCards[i]));
-    }
+    }*/
+    initialCards.forEach( (card) => {
+        cardDeck.append(getCardElement(card));
+    });
 }
 
 renderCards();

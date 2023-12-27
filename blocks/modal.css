@@ -129,13 +129,13 @@
         line-height: 21px;
         margin-bottom: 65px;
     }
+    
     .modal__container-button {
         /*left:430px; */
         font-size: 14px;
         line-height: 17px;
         max-width: 238px;
         margin-top: 25px;
-
     }
 
     .modal__container-close-button {
