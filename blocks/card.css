@@ -1,4 +1,5 @@
 .card {
+    position:relative;
     max-width: 282px;
     min-height: 361px;
     list-style: none;
@@ -40,7 +41,7 @@
     width: 21px;
     transition: opacity .2s linear;
     justify-self: left;
-    background: none;
+    background: url("../images/heart-icon.svg");
     align-self: center;
 	color: inherit;
 	border: none;
@@ -51,8 +52,37 @@
     clear: right;
 }
 
+.card__delete-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 18px;
+    width: 19px;
+    transition: opacity .2s linear;
+    justify-self: left;
+    background: url("../images/trash-button.svg");
+    /*align-self: center;*/
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	outline: inherit;
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.card__delete-button:hover {
+    opacity: 0.6;
+}
+
+.card__heart-button_clicked {
+    background: url("../images/heart-icon-black.svg");
+}
+
+
 .card__heart-button:hover {
-    opacity: 50%;
+    background: url("../images/heart-icon-hover.svg");
     cursor: pointer;
 }
 

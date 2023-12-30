@@ -47,17 +47,28 @@
           <h3 class="modal__container-header">New Place</h3>
           <input
             type="text"
-            class="modal__container-input modal__container-input_field_name"
-            placeholder="Name"
+            class="modal__container-input modal__container-input_field_title"
+            placeholder="Title"
           />
           <input
             type="text"
-            class="modal__container-input modal__container-input_field_bio"
-            placeholder="Bio"
+            class="modal__container-input modal__container-input_field_link"
+            placeholder="Image Link"
           />
-          <input type="submit" value="Save" class="modal__container-button" />
+          <input type="submit" value="Create" class="modal__container-button" />
         </form>
       </div>
+    </div>
+
+    <div class="modal modal_hidden" id="photoViewModal">
+      <div class="modal__image-viewer">
+          <img 
+          src=""
+          class="modal__container-image"
+          alt="Around the US logo">
+          <p class="modal__container-image-title"></p>
+          <button class="modal__container-close-button modal__container-close-button_img" type="button">
+        </div>
     </div>
 
     <header class="header">
@@ -102,9 +113,10 @@
             <div class="card__line">
               <h2 class="card__title"></h2>
               <button type="button" class="card__heart-button">
-                <img src="images/heart-icon.svg" alt="like button" />
+                <!--<img src="images/heart-icon.svg" alt="like button" class="card__heart-button-img"/>-->
               </button>
             </div>
+            <button type="button" class="card__delete-button">
           </li>
         </template>
       </ul>
@@ -116,3 +128,4 @@
     <script src="scripts/index.js"></script>
   </body>
 </html>
+
