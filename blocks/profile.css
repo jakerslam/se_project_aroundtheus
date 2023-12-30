@@ -16,7 +16,7 @@
 }
 
 .profile__author-title {
-    margin: 0px; 
+    margin: 0px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -71,7 +71,7 @@
     display: flex;*/
     flex-basis: 100%;
     font-weight: 400;
-    font-size: 18px; 
+    font-size: 18px;
     max-width:415px;
     text-overflow: ellipsis;
     white-space: nowrap;

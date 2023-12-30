@@ -83,7 +83,7 @@ function openEditModal() {
   editModal.classList.remove("modal_hidden");
   bioInput.value = currentBio.textContent;
   nameInput.value = currentName.textContent;
-  editModal
+  editModal3
     .querySelector(".modal__form")
     .addEventListener("submit", editModalSave);
 }
