@@ -1,5 +1,5 @@
-//Card functions
 
+/** Card functions */
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -30,7 +30,9 @@ const initialCards = [
 const cardTemplate = document.querySelector("#cardTemplate").content;
 const cardDeck = document.querySelector(".cards");
 
-//card pseudoclass constructor
+/** 
+ * card pseudoclass constructor
+ *  @constructor */
 function getCardElement(card) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   const cardImage = cardElement.querySelector(".card__img");
@@ -40,26 +42,21 @@ function getCardElement(card) {
   cardElement.querySelector(".card__img").alt = "An image of " + cardName;
   const likeButton = cardElement.querySelector(".card__heart-button");
 
-  
   cardImage.addEventListener("click", () => {
-    openImageModal(cardImage.src, cardName);
-});
+    openimageViewer(cardImage.src, cardName);
+  });
   likeButton.addEventListener("click", () => {
     likeButton.classList.toggle("card__heart-button_clicked");
   });
-  likeButton.addEventListener("hover", (likeButton) => {
-    likeButton.classList.toggle("card__heart-button_hover");
-  });
 
   const deleteButton = cardElement.querySelector(".card__delete-button");
-  deleteButton.addEventListener("click", () => {cardElement.remove();});
+  deleteButton.addEventListener("click", () => {
+    cardElement.remove();
+  });
   return cardElement;
-} 
+}
 
 function renderCards() {
-  /*for (let i=0; i < initialCards.length;i++) {
-        cardDeck.append(getCardElement(initialCards[i]));
-    }*/
   initialCards.forEach((card) => {
     cardDeck.append(getCardElement(card));
   });
@@ -67,98 +64,113 @@ function renderCards() {
 
 renderCards();
 
-//Edit modal variables
-const editModal = document.querySelector("#edit-modal");
+/** Edit modal variables */
+const editProfileForm = document.querySelector("#edit-modal");
 const editOpenButton = document.querySelector(".profile__edit-button");
-const editCloseButton = editModal.querySelector(
+const editCloseButton = editProfileForm.querySelector(
   ".modal__container-close-button"
 );
-const nameInput = editModal.querySelector(".modal__container-input_field_name");
-const bioInput = editModal.querySelector(".modal__container-input_field_bio");
+const nameInput = editProfileForm.querySelector(
+  ".modal__container-input_field_name"
+);
+const bioInput = editProfileForm.querySelector(
+  ".modal__container-input_field_bio"
+);
 const currentName = document.querySelector(".profile__author-title");
 const currentBio = document.querySelector(".profile__subtext");
 
-//modal functions
-function openEditModal() {
-  editModal.classList.remove("modal_hidden");
+/** modal functions */
+function openEditProfileForm() {
+  openModal(editProfileForm);
+  populateProfileForm();
+}
+editOpenButton.addEventListener("click", openEditProfileForm);
+
+function populateProfileForm() {
   bioInput.value = currentBio.textContent;
   nameInput.value = currentName.textContent;
-  editModal3
-    .querySelector(".modal__form")
-    .addEventListener("submit", editModalSave);
 }
-editOpenButton.addEventListener("click", openEditModal);
 
-function editModalSave(event) {
-  event.preventDefault;
-  console.log("editModalSave");
+function editProfileFormSave(event) {
+  event.preventDefault();
   currentName.textContent = nameInput.value;
   currentBio.textContent = bioInput.value;
-  closeEditModal(event);
+  closeModal(editProfileForm, event);
 }
+editProfileForm
+  .querySelector(".modal__form")
+  .addEventListener("submit", editProfileFormSave);
 
-function closeEditModal(event) {
-  event.preventDefault();
-  console.log("closeEditModal");
-  editModal.classList.add("modal_hidden");
-}
-editCloseButton.addEventListener("click", closeEditModal);
+editCloseButton.addEventListener("click", () => {
+  closeModal(editProfileForm);
+});
 
-//card modal variables
-const cardModal = document.querySelector("#card-modal");
+/** card modal variables */
+const newCardForm = document.querySelector("#card-modal");
 const addCardButton = document.querySelector(".profile__add-button");
-const cardCloseButton = cardModal.querySelector(
+const cardCloseFormButton = newCardForm.querySelector(
   ".modal__container-close-button"
 );
-const titleInput = cardModal.querySelector(
+newCardForm.querySelector(".modal__form").addEventListener("submit", addCard);
+
+const titleInput = newCardForm.querySelector(
   ".modal__container-input_field_title"
 );
-const linkInput = cardModal.querySelector(".modal__container-input_field_link");
+const linkInput = newCardForm.querySelector(
+  ".modal__container-input_field_link"
+);
 
-//card modal functions
-function openCardModal() {
-  cardModal.classList.remove("modal_hidden");
-  titleInput.value = "";
-  linkInput.value = "";
-  cardModal.querySelector(".modal__form").addEventListener("submit", addCard);
+/** card modal functions */
+function openNewCardForm() {
+  openModal(newCardForm);
+  newCardForm.querySelector(".modal__form").reset();
 }
-addCardButton.addEventListener("click", openCardModal);
+addCardButton.addEventListener("click", openNewCardForm);
 
 function addCard(event) {
-  event.preventDefault;
-  console.log("addCard");
+  event.preventDefault();
   const title = titleInput.value;
   const url = linkInput.value;
   const newCard = { name: title, link: url };
-  initialCards.push(newCard);
-  cardDeck.append(getCardElement(newCard));
-  closeCardModal(event);
+  cardDeck.prepend(getCardElement(newCard));
+  closeModal(newCardForm, event);
 }
 
-function deleteCard (card) {
-    initialCards.pop(card);
-    cardDeck.pop(card);
+cardCloseFormButton.addEventListener("click", () => {
+  closeModal(newCardForm);
+});
+
+
+/** image viewer variables */
+const imageViewer = document.querySelector("#photoViewModal");
+const imageViewerImg = imageViewer.querySelector(".modal__container-image");
+const imageViewerTitle = imageViewer.querySelector(
+  ".modal__container-image-title"
+);
+const imageViewerCloseButton = imageViewer.querySelector(
+  ".modal__container-close-button"
+);
+imageViewerCloseButton.addEventListener("click", () => {
+  closeModal(imageViewer);
+});
+
+
+/** opens image view modal */
+function openimageViewer(imageSrc, title) {
+  openModal(imageViewer);
+  imageViewerImg.src = imageSrc;
+  imageViewerTitle.textContent = title;
+  imageViewerImg.alt = "A photo of ${title}";
 }
 
-function closeCardModal(event) {
-  event.preventDefault();
-  console.log("closeCardModal");
-  cardModal.classList.add("modal_hidden");
-}
-cardCloseButton.addEventListener("click", closeCardModal);
 
-const imageModal = document.querySelector("#photoViewModal");
-const imageModalImg = imageModal.querySelector(".modal__container-image");
-const imageModalTitle = imageModal.querySelector(".modal__container-image-title");
-const imageModalCloseButton = imageModal.querySelector(".modal__container-close-button");
-imageModalCloseButton.addEventListener("click", closeImageModal)
-
-function openImageModal(imageSrc, title) {
-    imageModal.classList.remove("modal_hidden");
-    imageModalImg.src = imageSrc;
-    imageModalTitle.textContent = title;
+/** universal open modal function */
+function openModal(modal) {
+  modal.classList.remove("modal_hidden");
 }
 
-function closeImageModal() {
-    imageModal.classList.add("modal_hidden");
+/** universal close modal function */
+function closeModal(modal, event) {
+  event ? event.preventDefault() : false;
+  modal.classList.add("modal_hidden");
 }
