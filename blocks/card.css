@@ -15,7 +15,7 @@
     border-radius: 10px 10px 0px 0px;
 }
 
-.card__img:hover, .card__delete-button:hover {
+.card__img:hover {
     cursor: pointer;
 }
 
@@ -51,6 +51,7 @@
 	outline: inherit;
     margin-right:0px;
     clear: right;
+    
 }
 .card__delete-button {
     position: absolute;
@@ -71,20 +72,14 @@
     background-size: cover; /* Resize the background image to cover the entire container */
 }
 
-.card__delete-button:hover {
+.card__delete-button:hover, .card__heart-button:hover {
     opacity: 0.6;
+    cursor: pointer;
 }
 
 .card__heart-button_clicked {
     background: url("../images/heart-icon-black.svg");
 }
-
-
-.card__heart-button:hover {
-    background: url("../images/heart-icon-hover.svg");
-    cursor: pointer;
-}
-
 
 @media screen  and (min-width: 380px) and (max-width: 799px) {
 

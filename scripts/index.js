@@ -43,7 +43,7 @@ function getCardElement(card) {
   const likeButton = cardElement.querySelector(".card__heart-button");
 
   cardImage.addEventListener("click", () => {
-    openimageViewer(cardImage.src, cardName);
+    openImageViewer(cardImage.src, cardName);
   });
   likeButton.addEventListener("click", () => {
     likeButton.classList.toggle("card__heart-button_clicked");
@@ -95,7 +95,7 @@ function editProfileFormSave(event) {
   event.preventDefault();
   currentName.textContent = nameInput.value;
   currentBio.textContent = bioInput.value;
-  closeModal(editProfileForm, event);
+  closeModal(editProfileForm);
 }
 editProfileForm
   .querySelector(".modal__form")
@@ -140,7 +140,6 @@ cardCloseFormButton.addEventListener("click", () => {
   closeModal(newCardForm);
 });
 
-
 /** image viewer variables */
 const imageViewer = document.querySelector("#photoViewModal");
 const imageViewerImg = imageViewer.querySelector(".modal__container-image");
@@ -154,13 +153,12 @@ imageViewerCloseButton.addEventListener("click", () => {
   closeModal(imageViewer);
 });
 
-
 /** opens image view modal */
-function openimageViewer(imageSrc, title) {
+function openImageViewer(imageSrc, title) {
   openModal(imageViewer);
   imageViewerImg.src = imageSrc;
   imageViewerTitle.textContent = title;
-  imageViewerImg.alt = "A photo of ${title}";
+  imageViewerImg.alt = `A photo of ${title}`;
 }
 
 
@@ -170,7 +168,7 @@ function openModal(modal) {
 }
 
 /** universal close modal function */
-function closeModal(modal, event) {
-  event ? event.preventDefault() : false;
+function closeModal(modal) {
+  //event ? event.preventDefault() : false;
   modal.classList.add("modal_hidden");
 }

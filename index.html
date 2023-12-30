@@ -15,11 +15,9 @@
   </head>
 
   <body class="page">
-
     <div class="modal modal_hidden" id="edit-modal">
       <div class="modal__container">
-        <button class="modal__container-close-button" type="button">
-        </button>
+        <button class="modal__container-close-button" type="button"></button>
         <form class="modal__form">
           <h3 class="modal__container-header">Edit Profile</h3>
           <input
@@ -39,19 +37,20 @@
 
     <div class="modal modal_hidden" id="card-modal">
       <div class="modal__container">
-        <button class="modal__container-close-button" type="button">
-        </button>
+        <button class="modal__container-close-button" type="button"></button>
         <form class="modal__form">
           <h3 class="modal__container-header">New Place</h3>
           <input
             type="text"
             class="modal__container-input modal__container-input_field_title"
-            placeholder="Title" required
+            placeholder="Title"
+            required
           />
           <input
             type="url"
             class="modal__container-input modal__container-input_field_link"
-            placeholder="Image Link" required
+            placeholder="Image Link"
+            required
           />
           <input type="submit" value="Create" class="modal__container-button" />
         </form>
@@ -60,13 +59,13 @@
 
     <div class="modal modal_hidden" id="photoViewModal">
       <div class="modal__image-viewer">
-          <img 
-          src="#"
-          class="modal__container-image"
-          alt="Around the US logo">
-          <p class="modal__container-image-title"></p>
-          <button class="modal__container-close-button modal__container-close-button_img" type="button"></button>
-        </div>
+        <img src="#" class="modal__container-image" alt="Around the US logo" />
+        <p class="modal__container-image-title"></p>
+        <button
+          class="modal__container-close-button modal__container-close-button_img"
+          type="button"
+        ></button>
+      </div>
     </div>
 
     <header class="header">
@@ -110,8 +109,7 @@
             <img class="card__img" src="" alt="" />
             <div class="card__line">
               <h2 class="card__title"></h2>
-              <button type="button" class="card__heart-button">
-              </button>
+              <button type="button" class="card__heart-button"></button>
             </div>
             <button type="button" class="card__delete-button"></button>
           </li>
@@ -125,4 +123,3 @@
     <script src="scripts/index.js" defer></script>
   </body>
 </html>
-
