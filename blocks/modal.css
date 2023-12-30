@@ -19,7 +19,6 @@
 }
 
 .modal__form {
-  /*position: fixed;*/
   display: flex;
   align-self: center;
   justify-self: center;
@@ -27,13 +26,11 @@
   background-color: #fff;
   color: #000;
   width: 430px;
-  /*min-height: 330px;*/ /* change height to be caluculated via padding*/
   flex-direction: column;
   justify-content: space-evenly;
   text-align: left;
   border-radius: 10px;
   z-index: 3;
-  /*padding: auto;*/
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -76,7 +73,6 @@
 }
 
 .modal__container-close-button {
-  /*close button wacked up after  chaning modal box from absolute*/
   position: absolute;
   top: -50px;
   left: 430px;
@@ -107,7 +103,6 @@
 }
 
 .modal_hidden {
-  /*display: none;*/
   visibility: hidden;
   opacity: 0;
 }
@@ -157,7 +152,6 @@
   }
 
   .modal__container-button {
-    /*left:430px; */
     font-size: 14px;
     line-height: 17px;
     max-width: 238px;
