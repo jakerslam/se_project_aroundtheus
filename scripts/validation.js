@@ -46,15 +46,11 @@ function toggleButtonState(inputEls,formElement) {
 }
 
 const enableButton = (button) => {
-
-  console.log("enableButton");
   button.classList.remove(config.inactiveButtonClass);
   button.disabled = false;
 }
 
 const disableButton = (button) => {
-
-  console.log("disableButton");
   button.classList.add(config.inactiveButtonClass);
   button.disabled = true;
 }
@@ -62,7 +58,6 @@ const disableButton = (button) => {
 function setEventListeners(formElement, config, inputElsId) { //Not really sure what I did with inputElsId but it worked x)
   const {inputSelector} = config;
   inputElsId = [...formElement.querySelectorAll(inputSelector)];
-  console.log(formElement);
   inputElsId.forEach((inputEl) => {
 
     inputEl.addEventListener("input", () => {
