@@ -71,10 +71,10 @@ const editCloseButton = editProfileForm.querySelector(
   ".modal__container-close-button"
 );
 const nameInput = editProfileForm.querySelector(
-  ".modal__container-input_field_name"
+  ".modal__container-input_name"
 );
 const bioInput = editProfileForm.querySelector(
-  ".modal__container-input_field_bio"
+  ".modal__container-input_bio"
 );
 const currentName = document.querySelector(".profile__author-title");
 const currentBio = document.querySelector(".profile__subtext");
@@ -114,10 +114,10 @@ const cardCloseFormButton = newCardForm.querySelector(
 newCardForm.querySelector(".modal__form").addEventListener("submit", addCard);
 
 const titleInput = newCardForm.querySelector(
-  ".modal__container-input_field_title"
+  ".modal__container-input_title"
 );
 const linkInput = newCardForm.querySelector(
-  ".modal__container-input_field_link"
+  ".modal__container-input_url"
 );
 
 /** card modal functions */

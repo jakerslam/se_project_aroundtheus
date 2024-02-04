@@ -15,21 +15,37 @@
   </head>
 
   <body class="page">
+
     <div class="modal modal_hidden" id="edit-modal">
       <div class="modal__container">
         <button class="modal__container-close-button" type="button"></button>
-        <form class="modal__form">
+        <form class="modal__form" id="modal__form_bio">
           <h3 class="modal__container-header">Edit Profile</h3>
           <input
             type="text"
-            class="modal__container-input modal__container-input_field_name"
+            class="modal__container-input modal__container-input_name"
+            id="modal__container-input_name"
             placeholder="Name"
-          />
+            required
+            minlength="2"
+            maxlength="40"
+          />          
+          <span
+          class="modal__container_error-message modal__container-input_name-error"
+        ></span>
+        
           <input
             type="text"
-            class="modal__container-input modal__container-input_field_bio"
+            class="modal__container-input modal__container-input_bio"
+            id="modal__container-input_bio"
             placeholder="Bio"
+            required
+            minlength="2"
+            maxlength="200"
           />
+         <span
+            class="modal__container_error-message modal__container-input_bio-error"
+          ></span>
           <input type="submit" value="Save" class="modal__container-button" />
         </form>
       </div>
@@ -38,25 +54,35 @@
     <div class="modal modal_hidden" id="card-modal">
       <div class="modal__container">
         <button class="modal__container-close-button" type="button"></button>
-        <form class="modal__form">
+        <form class="modal__form" id="modal__form_card">
           <h3 class="modal__container-header">New Place</h3>
           <input
             type="text"
-            class="modal__container-input modal__container-input_field_title"
+            class="modal__container-input modal__container-input_title"
+            id="modal__container-input_title"
             placeholder="Title"
+            minlength="2"
+            minlength="40"
             required
           />
+         <span
+            class="modal__container_error-message modal__container-input_title-error"
+          >Error</span>
           <input
             type="url"
-            class="modal__container-input modal__container-input_field_link"
+            class="modal__container-input modal__container-input_url"
+            id="modal__container-input_url"
             placeholder="Image Link"
             required
           />
-          <input type="submit" value="Create" class="modal__container-button" />
+         <span
+            class="modal__container_error-message modal__container-input_url-error"
+          >Error</span>
+          <input type="submit" value="Create" class="modal__container-button modal__container-button_disabled" disabled />
         </form>
       </div>
     </div>
-
+  
     <div class="modal modal_hidden" id="photoViewModal">
       <div class="modal__image-viewer">
         <img src="#" class="modal__container-image" alt="Around the US logo" />
@@ -121,5 +147,6 @@
     </footer>
 
     <script src="scripts/index.js" defer></script>
+    <script src="scripts/validation.js" defer></script>
   </body>
 </html>
