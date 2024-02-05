@@ -1,4 +1,3 @@
-
 /** Card functions */
 const initialCards = [
   {
@@ -30,7 +29,7 @@ const initialCards = [
 const cardTemplate = document.querySelector("#cardTemplate").content;
 const cardDeck = document.querySelector(".cards");
 
-/** 
+/**
  * card pseudoclass constructor
  *  @constructor */
 function getCardElement(card) {
@@ -70,12 +69,8 @@ const editOpenButton = document.querySelector(".profile__edit-button");
 const editCloseButton = editProfileForm.querySelector(
   ".modal__container-close-button"
 );
-const nameInput = editProfileForm.querySelector(
-  ".modal__container-input_name"
-);
-const bioInput = editProfileForm.querySelector(
-  ".modal__container-input_bio"
-);
+const nameInput = editProfileForm.querySelector(".modal__container-input_name");
+const bioInput = editProfileForm.querySelector(".modal__container-input_bio");
 const currentName = document.querySelector(".profile__author-title");
 const currentBio = document.querySelector(".profile__subtext");
 
@@ -113,12 +108,8 @@ const cardCloseFormButton = newCardForm.querySelector(
 );
 newCardForm.querySelector(".modal__form").addEventListener("submit", addCard);
 
-const titleInput = newCardForm.querySelector(
-  ".modal__container-input_title"
-);
-const linkInput = newCardForm.querySelector(
-  ".modal__container-input_url"
-);
+const titleInput = newCardForm.querySelector(".modal__container-input_title");
+const linkInput = newCardForm.querySelector(".modal__container-input_url");
 
 /** card modal functions */
 function openNewCardForm() {
@@ -161,14 +152,25 @@ function openImageViewer(imageSrc, title) {
   imageViewerImg.alt = `A photo of ${title}`;
 }
 
-
 /** universal open modal function */
 function openModal(modal) {
   modal.classList.remove("modal_hidden");
+  addCloseEventListeners(modal);
+}
+
+function addCloseEventListeners(modal) {
+  const popUpBox =
+    modal.querySelector(".modal__container") ||
+    modal.querySelector(".modal__container-image");
+  modal.addEventListener("click", (evt) => {
+    if (!popUpBox.contains(evt.target)) closeModal(modal);
+  });
+  document.addEventListener("keydown", (evt) => {
+    if (evt.key === "Escape") closeModal(modal);
+  });
 }
 
 /** universal close modal function */
 function closeModal(modal) {
-  //event ? event.preventDefault() : false;
   modal.classList.add("modal_hidden");
 }
