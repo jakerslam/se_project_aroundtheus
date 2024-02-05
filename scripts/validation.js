@@ -55,13 +55,13 @@ const disableButton = (button) => {
   button.disabled = true;
 }
 
-function setEventListeners(formElement, config, inputElsId) { //Not really sure what I did with inputElsId but it worked x)
+function setEventListeners(formElement, config) {
   const {inputSelector} = config;
-  inputElsId = [...formElement.querySelectorAll(inputSelector)];
-  inputElsId.forEach((inputEl) => {
+  const inputEls = [...formElement.querySelectorAll(inputSelector)];
+  inputEls.forEach((inputEl) => {
 
     inputEl.addEventListener("input", () => {
-      toggleButtonState(inputElsId,formElement);
+      toggleButtonState(inputEls,formElement);
       checkValidity(formElement, inputEl);
     });
   });
@@ -76,7 +76,7 @@ function enableValidation(config) {
       evt.preventDefault();
     });
 
-    setEventListeners(formElement, config, indexID);
+    setEventListeners(formElement, config);
   });
 }
 
