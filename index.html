@@ -15,7 +15,6 @@
   </head>
 
   <body class="page">
-
     <div class="modal modal_hidden" id="edit-modal">
       <div class="modal__container">
         <button class="modal__container-close-button" type="button"></button>
@@ -29,11 +28,11 @@
             required
             minlength="2"
             maxlength="40"
-          />          
+          />
           <span
-          class="modal__container_error-message modal__container-input_name-error"
-        ></span>
-        
+            class="modal__container_error-message modal__container-input_name-error"
+          ></span>
+
           <input
             type="text"
             class="modal__container-input modal__container-input_bio"
@@ -43,7 +42,7 @@
             minlength="2"
             maxlength="200"
           />
-         <span
+          <span
             class="modal__container_error-message modal__container-input_bio-error"
           ></span>
           <input type="submit" value="Save" class="modal__container-button" />
@@ -65,9 +64,10 @@
             minlength="40"
             required
           />
-         <span
+          <span
             class="modal__container_error-message modal__container-input_title-error"
-          >Error</span>
+            >Error</span
+          >
           <input
             type="url"
             class="modal__container-input modal__container-input_url"
@@ -75,14 +75,20 @@
             placeholder="Image Link"
             required
           />
-         <span
+          <span
             class="modal__container_error-message modal__container-input_url-error"
-          >Error</span>
-          <input type="submit" value="Create" class="modal__container-button modal__container-button_disabled" disabled />
+            >Error</span
+          >
+          <input
+            type="submit"
+            value="Create"
+            class="modal__container-button modal__container-button_disabled"
+            disabled
+          />
         </form>
       </div>
     </div>
-  
+
     <div class="modal modal_hidden" id="photoViewModal">
       <div class="modal__image-viewer">
         <img src="#" class="modal__container-image" alt="Around the US logo" />

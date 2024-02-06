@@ -62,12 +62,10 @@
 }
 
 .modal__container-button_disabled {
-  background-color:white;
-  color: rgb(0, 0, 0,0.2);
-  border: 1px solid rgb(0, 0, 0,0.2);
+  background-color: white;
+  color: rgb(0, 0, 0, 0.2);
+  border: 1px solid rgb(0, 0, 0, 0.2);
 }
-
-
 
 .modal__container-input {
   font-weight: 400;
@@ -86,12 +84,12 @@
 }
 
 .modal__container_error-message {
-  color:red;
+  color: red;
   font-size: 12px;
   font-weight: 400;
   align-self: center;
   text-align: left;
-  visibility:hidden;
+  visibility: hidden;
   width: 358px;
   margin-bottom: 15px;
 }
