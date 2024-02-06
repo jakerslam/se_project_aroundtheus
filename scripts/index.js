@@ -96,9 +96,9 @@ editProfileForm
   .querySelector(".modal__form")
   .addEventListener("submit", editProfileFormSave);
 
-editCloseButton.addEventListener("click", () => {
-  closeModal(editProfileForm);
-});
+// editCloseButton.addEventListener("click", () => {
+//   closeModal(editProfileForm);
+// });
 
 /** card modal variables */
 const newCardForm = document.querySelector("#card-modal");
@@ -127,9 +127,9 @@ function addCard(event) {
   closeModal(newCardForm, event);
 }
 
-cardCloseFormButton.addEventListener("click", () => {
-  closeModal(newCardForm);
-});
+// cardCloseFormButton.addEventListener("click", () => {
+//   closeModal(newCardForm);
+// });
 
 /** image viewer variables */
 const imageViewer = document.querySelector("#photoViewModal");
@@ -140,9 +140,9 @@ const imageViewerTitle = imageViewer.querySelector(
 const imageViewerCloseButton = imageViewer.querySelector(
   ".modal__container-close-button"
 );
-imageViewerCloseButton.addEventListener("click", () => {
-  closeModal(imageViewer);
-});
+// imageViewerCloseButton.addEventListener("click", () => {
+//   closeModal(imageViewer);
+// });
 
 /** opens image view modal */
 function openImageViewer(imageSrc, title) {
@@ -162,12 +162,17 @@ function addCloseEventListeners(modal) {
   const popUpBox =
     modal.querySelector(".modal__container") ||
     modal.querySelector(".modal__container-image");
+    const closeButton = modal.querySelector(".modal__container-close-button");
   modal.addEventListener("click", (evt) => {
     if (!popUpBox.contains(evt.target)) closeModal(modal);
   });
   document.addEventListener("keydown", (evt) => {
     if (evt.key === "Escape") closeModal(modal);
   });
+  closeButton.addEventListener("click", () => {
+    closeModal(modal);
+  });
+  
 }
 
 /** universal close modal function */
