@@ -77,10 +77,10 @@ const currentBio = document.querySelector(".profile__subtext");
 function openEditProfileForm() {
   openModal(editProfileForm);
   fillProfileInputs();
-  editProfileForm
-    .querySelector(".modal__form")
-    .addEventListener("submit", saveEditProfileForm);
 }
+editProfileForm
+.querySelector(".modal__form")
+.addEventListener("submit", saveEditProfileForm);
 editOpenButton.addEventListener("click", openEditProfileForm);
 
 function fillProfileInputs() {
@@ -109,7 +109,6 @@ const linkInput = newCardModal.querySelector(".modal__container-input_url");
 /** card modal functions */
 function openNewCardForm() {
   openModal(newCardModal);
-  // newCardModal.querySelector(".modal__form").reset();
 }
 addCardButton.addEventListener("click", openNewCardForm);
 
@@ -149,35 +148,26 @@ function openModal(modal) {
 
 function toggleCloseEventListeners(modal, option) {
   const popUpBox =
-    modal.querySelector(".modal__container") ||
-    modal.querySelector(".modal__container-image");
+    modal.querySelector(".modal__container_js");
   const closeButton = modal.querySelector(".modal__container-close-button");
-  const closeWithEsc = (evt, modal) => {
+  const closeWithEsc = (evt) => {
     if (evt.key === "Escape") closeModal(modal);
   };
-  const closeClickAway = (evt, popUpBox, modal) => {
+  const closeNormally = () => {      
+    closeModal(modal);
+  }
+  const closeClickAway = (evt) => {
     if (!popUpBox.contains(evt.target)) closeModal(modal);
   };
+
   if (option == "add") {
-    modal.addEventListener("click", (evt) => {
-      closeClickAway(evt, popUpBox, modal);
-    });
-    document.addEventListener("keydown", (evt) => {
-      closeWithEsc(evt, modal);
-    });
-    closeButton.addEventListener("click", () => {
-      closeModal(modal);
-    });
+    modal.addEventListener("click", closeClickAway);
+    document.addEventListener("keydown", closeWithEsc);
+    closeButton.addEventListener("click", closeNormally);
   } else if (option == "remove") {
-    document.removeEventListener("keydown", (evt) => {
-      closeWithEsc(evt, modal);
-    });
-    closeButton.removeEventListener("click", () => {
-      closeModal(modal);
-    });
-    modal.removeEventListener("click", (evt) => {
-      closeClickAway(evt, popUpBox, modal);
-    });
+    modal.removeEventListener("click", closeClickAway);
+    document.removeEventListener("keydown", closeWithEsc);
+    closeButton.removeEventListener("click", closeNormally);
   }
 }
 
