@@ -65,9 +65,7 @@ renderCards();
 /** Edit modal variables */
 const editProfileForm = document.querySelector("#edit-modal");
 const editOpenButton = document.querySelector(".profile__edit-button");
-const editCloseButton = editProfileForm.querySelector(
-  ".modal__container-close-button"
-);
+addCloseEventListener(editProfileForm);
 const nameInput = editProfileForm.querySelector(".modal__container-input_name");
 const bioInput = editProfileForm.querySelector(".modal__container-input_bio");
 const currentName = document.querySelector(".profile__author-title");
@@ -79,8 +77,8 @@ function openEditProfileForm() {
   fillProfileInputs();
 }
 editProfileForm
-.querySelector(".modal__form")
-.addEventListener("submit", saveEditProfileForm);
+  .querySelector(".modal__form")
+  .addEventListener("submit", saveEditProfileForm);
 editOpenButton.addEventListener("click", openEditProfileForm);
 
 function fillProfileInputs() {
@@ -98,11 +96,8 @@ function saveEditProfileForm(event) {
 /** card modal variables */
 const newCardModal = document.querySelector("#card-modal");
 const addCardButton = document.querySelector(".profile__add-button");
-const cardCloseFormButton = newCardModal.querySelector(
-  ".modal__container-close-button"
-);
 newCardModal.querySelector(".modal__form").addEventListener("submit", addCard);
-
+addCloseEventListener(newCardModal);
 const titleInput = newCardModal.querySelector(".modal__container-input_title");
 const linkInput = newCardModal.querySelector(".modal__container-input_url");
 
@@ -128,9 +123,7 @@ const imageViewerImg = imageViewer.querySelector(".modal__container-image");
 const imageViewerTitle = imageViewer.querySelector(
   ".modal__container-image-title"
 );
-const imageViewerCloseButton = imageViewer.querySelector(
-  ".modal__container-close-button"
-);
+addCloseEventListener(imageViewer);
 
 /** opens image view modal */
 function openImageViewer(imageSrc, title) {
@@ -143,36 +136,51 @@ function openImageViewer(imageSrc, title) {
 /** universal open modal function */
 function openModal(modal) {
   modal.classList.remove("modal_hidden");
-  toggleCloseEventListeners(modal, "add");
+  modal == editProfileForm
+    ? document.addEventListener("keydown", closeProfileWithEsc)
+    : false;
+  modal == imageViewer
+    ? document.addEventListener("keydown", closePicWithEsc)
+    : false;
+  modal == newCardModal
+    ? document.addEventListener("keydown", closeCardWithEsc)
+    : false;
 }
 
-function toggleCloseEventListeners(modal, option) {
-  const popUpBox =
-    modal.querySelector(".modal__container_js");
+const closeProfileWithEsc = (evt) => {
+  if (evt.key === "Escape") closeModal(editProfileForm);
+};
+const closePicWithEsc = (evt) => {
+  if (evt.key === "Escape") closeModal(imageViewer);
+};
+const closeCardWithEsc = (evt) => {
+  if (evt.key === "Escape") closeModal(newCardModal);
+};
+
+function addCloseEventListener(modal) {
+  const popUpBox = modal.querySelector(".modal__container_js");
   const closeButton = modal.querySelector(".modal__container-close-button");
-  const closeWithEsc = (evt) => {
-    if (evt.key === "Escape") closeModal(modal);
-  };
-  const closeNormally = () => {      
+  const closeNormally = () => {
     closeModal(modal);
-  }
+  };
   const closeClickAway = (evt) => {
     if (!popUpBox.contains(evt.target)) closeModal(modal);
   };
-
-  if (option == "add") {
-    modal.addEventListener("click", closeClickAway);
-    document.addEventListener("keydown", closeWithEsc);
-    closeButton.addEventListener("click", closeNormally);
-  } else if (option == "remove") {
-    modal.removeEventListener("click", closeClickAway);
-    document.removeEventListener("keydown", closeWithEsc);
-    closeButton.removeEventListener("click", closeNormally);
-  }
+  modal.addEventListener("click", closeClickAway);
+  closeButton.addEventListener("click", closeNormally);
 }
 
 /** universal close modal function */
 function closeModal(modal) {
+  console.log(modal);
   modal.classList.add("modal_hidden");
-  toggleCloseEventListeners(modal, "remove");
+  modal == editProfileForm
+    ? document.removeEventListener("keydown", closeProfileWithEsc)
+    : false;
+  modal == imageViewer
+    ? document.removeEventListener("keydown", closePicWithEsc)
+    : false;
+  modal == newCardModal
+    ? document.removeEventListener("keydown", closeCardWithEsc)
+    : false;
 }
