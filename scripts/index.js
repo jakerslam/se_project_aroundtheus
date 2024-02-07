@@ -136,25 +136,13 @@ function openImageViewer(imageSrc, title) {
 /** universal open modal function */
 function openModal(modal) {
   modal.classList.remove("modal_hidden");
-  modal == editProfileForm
-    ? document.addEventListener("keydown", closeProfileWithEsc)
-    : false;
-  modal == imageViewer
-    ? document.addEventListener("keydown", closePicWithEsc)
-    : false;
-  modal == newCardModal
-    ? document.addEventListener("keydown", closeCardWithEsc)
-    : false;
+  modal.classList.add("modal_visible-js");
+  document.addEventListener("keydown", handleEscEvent);
 }
 
-const closeProfileWithEsc = (evt) => {
-  if (evt.key === "Escape") closeModal(editProfileForm);
-};
-const closePicWithEsc = (evt) => {
-  if (evt.key === "Escape") closeModal(imageViewer);
-};
-const closeCardWithEsc = (evt) => {
-  if (evt.key === "Escape") closeModal(newCardModal);
+const handleEscEvent = (evt) => {
+  const currentModal = document.querySelector(".modal_visible-js");
+  if (evt.key === "Escape") closeModal(currentModal);
 };
 
 function addCloseEventListener(modal) {
@@ -173,13 +161,6 @@ function addCloseEventListener(modal) {
 /** universal close modal function */
 function closeModal(modal) {
   modal.classList.add("modal_hidden");
-  modal == editProfileForm
-    ? document.removeEventListener("keydown", closeProfileWithEsc)
-    : false;
-  modal == imageViewer
-    ? document.removeEventListener("keydown", closePicWithEsc)
-    : false;
-  modal == newCardModal
-    ? document.removeEventListener("keydown", closeCardWithEsc)
-    : false;
+  modal.classList.remove("modal_visible-js");
+  document.removeEventListener("keydown", handleEscEvent);
 }
