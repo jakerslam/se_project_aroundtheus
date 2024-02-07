@@ -172,7 +172,6 @@ function addCloseEventListener(modal) {
 
 /** universal close modal function */
 function closeModal(modal) {
-  console.log(modal);
   modal.classList.add("modal_hidden");
   modal == editProfileForm
     ? document.removeEventListener("keydown", closeProfileWithEsc)
