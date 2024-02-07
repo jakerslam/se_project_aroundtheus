@@ -141,8 +141,10 @@ function openModal(modal) {
 }
 
 const handleEscEvent = (evt) => {
-  const currentModal = document.querySelector(".modal_visible-js");
-  if (evt.key === "Escape") closeModal(currentModal);
+  if (evt.key === "Escape") {
+    const currentModal = document.querySelector(".modal_visible-js");
+    closeModal(currentModal);
+  }
 };
 
 function addCloseEventListener(modal) {
