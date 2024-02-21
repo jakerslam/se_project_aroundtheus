@@ -1,6 +1,5 @@
 class FormValidator {
   constructor(config, formElement) {
-    console.log(`#${formElement.id}`)
     this._config = config;
     this._config.formSelector = `#${formElement.id}`;
   }
