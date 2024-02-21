@@ -1,4 +1,6 @@
 /** Card functions */
+import {Card} from "../components/Card.js";
+import {FormValidator} from "../components/FormValidator.js";
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -25,39 +27,33 @@ const initialCards = [
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
   },
 ];
+const genConfig = {
+  formSelector: ".modal__form",
+  inputSelector: ".modal__container-input",
+  submitButtonSelector: ".modal__container-button",
+  inactiveButtonClass: "modal__container-button_disabled",
+  inputErrorClass: "modal__container-input_error",
+  showErrorElClass: "modal__container_error-message_visible",
+};
+// const cardConfig = {
 
+// };
 const cardTemplate = document.querySelector("#cardTemplate").content;
 const cardDeck = document.querySelector(".cards");
 
-/**
- * card pseudoclass constructor
- *  @constructor */
-function getCardElement(card) {
-  const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
-  const cardImage = cardElement.querySelector(".card__img");
-  const cardTitle = cardElement.querySelector(".card__title");
-  const cardName = card.name;
-  const likeButton = cardElement.querySelector(".card__heart-button");
-  const deleteButton = cardElement.querySelector(".card__delete-button");
-  cardImage.src = card.link;
-  cardImage.alt = "An image of " + cardName;
-  cardTitle.textContent = cardName;
-  cardImage.addEventListener("click", () => {
-    openImageViewer(cardImage.src, cardName);
+function renderCards() {
+  initialCards.forEach((card) => {  
+    const cardName = card.name;
+    const cardSrc = card.link;
+    const cardData = { name: cardName, link: cardSrc };
+    const cardSelector = cardTemplate.querySelector(".card");
+    const newCard = new Card(cardData, cardSelector, handleImageClick);
+    cardDeck.append(newCard.populateCard());
   });
-  likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("card__heart-button_clicked");
-  });
-  deleteButton.addEventListener("click", () => {
-    cardElement.remove();
-  });
-  return cardElement;
 }
 
-function renderCards() {
-  initialCards.forEach((card) => {
-    cardDeck.append(getCardElement(card));
-  });
+function handleImageClick(cardImgUrl,cardName) {
+  openImageViewer(cardImgUrl, cardName);
 }
 
 renderCards();
@@ -88,8 +84,10 @@ function fillProfileInputs() {
 
 function saveEditProfileForm(event) {
   event.preventDefault();
+  const submitButton = editProfileForm.querySelector(genConfig.submitButtonSelector);
   currentName.textContent = nameInput.value;
   currentBio.textContent = bioInput.value;
+  disableButton(submitButton);
   closeModal(editProfileForm);
 }
 
@@ -111,9 +109,13 @@ function addCard(evt) {
   evt.preventDefault();
   const title = titleInput.value;
   const url = linkInput.value;
-  const newCard = { name: title, link: url };
-  cardDeck.prepend(getCardElement(newCard));
+  const cardData = { name: title, link: url };
+  const cardSelector = cardTemplate.querySelector(".card");
+  const newCard = new Card(cardData, cardSelector, handleImageClick);
+  const submitButton = newCardModal.querySelector(genConfig.submitButtonSelector);
+  cardDeck.prepend(newCard.populateCard());
   newCardModal.querySelector(".modal__form").reset();
+  disableButton(submitButton);
   closeModal(newCardModal);
 }
 
@@ -135,6 +137,8 @@ function openImageViewer(imageSrc, title) {
 
 /** universal open modal function */
 function openModal(modal) {
+  const validator = new FormValidator(genConfig,modal);
+  validator.enableValidation();
   modal.classList.remove("modal_hidden");
   modal.classList.add("modal_visible-js");
   document.addEventListener("keydown", handleEscEvent);
@@ -166,3 +170,12 @@ function closeModal(modal) {
   modal.classList.remove("modal_visible-js");
   document.removeEventListener("keydown", handleEscEvent);
 }
+
+const disableButton = (button) => {
+  button.classList.add(genConfig.inactiveButtonClass);
+  button.disabled = true;
+}
+// const enableButton = (button) => {
+//   button.classList.remove(genConfig.inactiveButtonClass);
+//   button.disabled = false;
+// }
