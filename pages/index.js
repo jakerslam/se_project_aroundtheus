@@ -170,8 +170,9 @@ function addCloseEventListener(modal) {
 }
 
 const addValidators = () => {
-  createValidator(newCardEls.cardModal);
-  createValidator(editProfileModal);
+  Array.from(document.querySelectorAll(".modal")).forEach((modal)=>{
+    createValidator(modal);
+  });
 };
 
 const addInitEventListeners = () => {
@@ -187,7 +188,6 @@ function closeModal(modal) {
   modal.classList.remove("modal_visible-js");
   document.removeEventListener("keydown", handleEscEvent);
 }
-
 
 renderCards();
 addValidators();
