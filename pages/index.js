@@ -53,12 +53,12 @@ const createCard = (card) => {
   const cardElement = cardTemplate.querySelector(".card");
   const newCard = new Card(cardData, cardElement, handleImageClick);
   return newCard;
-}
+};
 
 const createValidator = (modal) => {
-  const newValidator = new FormValidator(genConfig, modal)
+  const newValidator = new FormValidator(genConfig, modal);
   return newValidator;
-}
+};
 
 function handleImageClick(cardImgUrl, cardName) {
   openImageViewer(cardImgUrl, cardName);
@@ -71,7 +71,9 @@ const editProfileModal = document.querySelector("#edit-modal");
 const profileForm = document.forms["bio-form"];
 const editOpenButton = document.querySelector(".profile__edit-button");
 addCloseEventListener(editProfileModal);
-const nameInput = editProfileModal.querySelector(".modal__container-input_name");
+const nameInput = editProfileModal.querySelector(
+  ".modal__container-input_name"
+);
 const bioInput = editProfileModal.querySelector(".modal__container-input_bio");
 const currentName = document.querySelector(".profile__author-title");
 const currentBio = document.querySelector(".profile__subtext");
