@@ -53,8 +53,8 @@ function renderCards() {
 }
 
 const createCard = (card) => {
-  const cardElement = cardEls.cardTemplate.querySelector(".card");
-  const newCard = new Card(card, cardElement, handleImageClick);
+  //const cardElement = cardEls.cardTemplate;
+  const newCard = new Card(card, cardEls.cardTemplate, handleImageClick);
   return newCard.generateCard();
 };
 
@@ -83,8 +83,6 @@ function openEditProfileForm() {
   openModal(editProfileModal);
   fillProfileInputs();
 }
-profileForm.addEventListener("submit", saveEditProfileForm);
-interfaceEls.editOpenButton.addEventListener("click", openEditProfileForm);
 
 function fillProfileInputs() {
   bioInput.value = currentBio.textContent;
@@ -104,8 +102,8 @@ function saveEditProfileForm(event) {
 const newCardEls = {
   cardModal : document.querySelector("#card-modal"),
   cardForm : document.forms["card-form"],
-  titleInput : document.querySelector("#card-modal").querySelector(".modal__container-input_title"),
-  linkInput : document.querySelector("#card-modal").querySelector(".modal__container-input_url"),
+  titleInput : document.querySelector(".modal__container-input_card-title-js"),
+  linkInput : document.querySelector(".modal__container-input_card-url-js"),
 };
 /** card modal functions */
 function openNewCardForm() {
@@ -120,16 +118,14 @@ function addCard(evt) {
   const newCard = createCard(cardData);
   cardEls.cardDeck.prepend(newCard);
   newCardEls.cardForm.reset();
-  newCardEls.titleInput.value = "";
-  newCardEls.linkInput.value = "";
   closeModal(newCardEls.cardModal);
 }
 
 /** image viewer variables */
 const imgViewEls = {
   imageViewer : document.querySelector("#photoViewModal"),
-  imageViewerImg : document.querySelector("#photoViewModal").querySelector(".modal__container-image"),
-  imageViewerTitle : document.querySelector("#photoViewModal").querySelector(
+  imageViewerImg : document.querySelector(".modal__container-image"),
+  imageViewerTitle : document.querySelector(
     ".modal__container-image-title"
   ),
 };
@@ -181,6 +177,8 @@ const addInitEventListeners = () => {
   newCardEls.cardForm.addEventListener("submit", addCard);
   addCloseEventListener(editProfileModal);
   addCloseEventListener(newCardEls.cardModal);
+  profileForm.addEventListener("submit", saveEditProfileForm);
+  interfaceEls.editOpenButton.addEventListener("click", openEditProfileForm);
 }
 /** universal close modal function */
 function closeModal(modal) {

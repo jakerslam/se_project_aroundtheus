@@ -1,11 +1,11 @@
 //import {} from
 
 class Card {
-  constructor(data, cardSelector, handleImageClick) {
+  constructor(data, cardTemplate, handleImageClick) {
     this._handleImageClick = handleImageClick;
     this._cardImgUrl = data.link;
     this._cardName = data.name;
-    this._cardElement = cardSelector.cloneNode(true);
+    this._cardElement = cardTemplate.querySelector(".card").cloneNode(true);;
     this._likeButton = this._cardElement.querySelector(".card__heart-button");
     this._deleteButton = this._cardElement.querySelector(
       ".card__delete-button"
