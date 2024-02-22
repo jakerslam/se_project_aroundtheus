@@ -35,28 +35,32 @@ const genConfig = {
   inputErrorClass: "modal__container-input_error",
   showErrorElClass: "modal__container_error-message_visible",
 };
-// const cardConfig = {
+const cardEls = {
+  cardTemplate : document.querySelector("#cardTemplate").content,
+  cardDeck : document.querySelector(".cards"),
+};
 
-// };
-const cardTemplate = document.querySelector("#cardTemplate").content;
-const cardDeck = document.querySelector(".cards");
+const interfaceEls = {
+  addCardButton : document.querySelector(".profile__add-button"),
+  editOpenButton : document.querySelector(".profile__edit-button"),
+};
 
 function renderCards() {
   initialCards.forEach((card) => {
     const newCard = createCard(card);
-    cardDeck.append(newCard.generateCard());
+    cardEls.cardDeck.append(newCard);
   });
 }
 
 const createCard = (card) => {
-  const cardData = { name: card.name, link: card.link };
-  const cardElement = cardTemplate.querySelector(".card");
-  const newCard = new Card(cardData, cardElement, handleImageClick);
-  return newCard;
+  const cardElement = cardEls.cardTemplate.querySelector(".card");
+  const newCard = new Card(card, cardElement, handleImageClick);
+  return newCard.generateCard();
 };
 
 const createValidator = (modal) => {
   const newValidator = new FormValidator(genConfig, modal);
+  newValidator.enableValidation();
   return newValidator;
 };
 
@@ -64,21 +68,15 @@ function handleImageClick(cardImgUrl, cardName) {
   openImageViewer(cardImgUrl, cardName);
 }
 
-renderCards();
-
 /** Edit modal variables */
 const editProfileModal = document.querySelector("#edit-modal");
 const profileForm = document.forms["bio-form"];
-const editOpenButton = document.querySelector(".profile__edit-button");
-addCloseEventListener(editProfileModal);
 const nameInput = editProfileModal.querySelector(
   ".modal__container-input_name"
 );
 const bioInput = editProfileModal.querySelector(".modal__container-input_bio");
 const currentName = document.querySelector(".profile__author-title");
 const currentBio = document.querySelector(".profile__subtext");
-const bioValidator = createValidator(editProfileModal);
-bioValidator.enableValidation();
 
 /** modal functions */
 function openEditProfileForm() {
@@ -86,7 +84,7 @@ function openEditProfileForm() {
   fillProfileInputs();
 }
 profileForm.addEventListener("submit", saveEditProfileForm);
-editOpenButton.addEventListener("click", openEditProfileForm);
+interfaceEls.editOpenButton.addEventListener("click", openEditProfileForm);
 
 function fillProfileInputs() {
   bioInput.value = currentBio.textContent;
@@ -103,46 +101,45 @@ function saveEditProfileForm(event) {
 }
 
 /** card modal variables */
-const newCardModal = document.querySelector("#card-modal");
-const addCardButton = document.querySelector(".profile__add-button");
-newCardModal.querySelector(".modal__form").addEventListener("submit", addCard);
-addCloseEventListener(newCardModal);
-const titleInput = newCardModal.querySelector(".modal__container-input_title");
-const linkInput = newCardModal.querySelector(".modal__container-input_url");
-const cardValidator = createValidator(newCardModal);
-cardValidator.enableValidation();
+const newCardEls = {
+  cardModal : document.querySelector("#card-modal"),
+  cardForm : document.forms["card-form"],
+  titleInput : document.querySelector("#card-modal").querySelector(".modal__container-input_title"),
+  linkInput : document.querySelector("#card-modal").querySelector(".modal__container-input_url"),
+};
 /** card modal functions */
 function openNewCardForm() {
-  openModal(newCardModal);
+  openModal(newCardEls.cardModal);
 }
-addCardButton.addEventListener("click", openNewCardForm);
 
 function addCard(evt) {
   evt.preventDefault();
-  const title = titleInput.value;
-  const url = linkInput.value;
+  const title = newCardEls.titleInput.value;
+  const url = newCardEls.linkInput.value;
   const cardData = { name: title, link: url };
   const newCard = createCard(cardData);
-  cardDeck.prepend(newCard.generateCard());
-  newCardModal.querySelector(".modal__form").reset();
-  titleInput.value = "";
-  linkInput.value = "";
-  closeModal(newCardModal);
+  cardEls.cardDeck.prepend(newCard);
+  newCardEls.cardForm.reset();
+  newCardEls.titleInput.value = "";
+  newCardEls.linkInput.value = "";
+  closeModal(newCardEls.cardModal);
 }
 
 /** image viewer variables */
-const imageViewer = document.querySelector("#photoViewModal");
-const imageViewerImg = imageViewer.querySelector(".modal__container-image");
-const imageViewerTitle = imageViewer.querySelector(
-  ".modal__container-image-title"
-);
-addCloseEventListener(imageViewer);
+const imgViewEls = {
+  imageViewer : document.querySelector("#photoViewModal"),
+  imageViewerImg : document.querySelector("#photoViewModal").querySelector(".modal__container-image"),
+  imageViewerTitle : document.querySelector("#photoViewModal").querySelector(
+    ".modal__container-image-title"
+  ),
+};
+
 /** opens image view modal */
 function openImageViewer(imageSrc, title) {
-  openModal(imageViewer);
-  imageViewerImg.src = imageSrc;
-  imageViewerTitle.textContent = title;
-  imageViewerImg.alt = `A photo of ${title}`;
+  openModal(imgViewEls.imageViewer);
+  imgViewEls.imageViewerImg.src = imageSrc;
+  imgViewEls.imageViewerTitle.textContent = title;
+  imgViewEls.imageViewerImg.alt = `A photo of ${title}`;
 }
 
 /** universal open modal function */
@@ -172,9 +169,26 @@ function addCloseEventListener(modal) {
   closeButton.addEventListener("click", closeNormally);
 }
 
+const addValidators = () => {
+  createValidator(newCardEls.cardModal);
+  createValidator(editProfileModal);
+};
+
+const addInitEventListeners = () => {
+  interfaceEls.addCardButton.addEventListener("click", openNewCardForm);
+  addCloseEventListener(imgViewEls.imageViewer);
+  newCardEls.cardForm.addEventListener("submit", addCard);
+  addCloseEventListener(editProfileModal);
+  addCloseEventListener(newCardEls.cardModal);
+}
 /** universal close modal function */
 function closeModal(modal) {
   modal.classList.add("modal_hidden");
   modal.classList.remove("modal_visible-js");
   document.removeEventListener("keydown", handleEscEvent);
 }
+
+
+renderCards();
+addValidators();
+addInitEventListeners();
