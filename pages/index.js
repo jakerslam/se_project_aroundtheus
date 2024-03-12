@@ -1,6 +1,7 @@
+
 /** Card functions */
-import { Card } from "../components/Card.js";
-import { FormValidator } from "../components/FormValidator.js";
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -53,7 +54,6 @@ function renderCards() {
 }
 
 const createCard = (card) => {
-  //const cardElement = cardEls.cardTemplate;
   const newCard = new Card(card, cardEls.cardTemplate, handleImageClick);
   return newCard.generateCard();
 };

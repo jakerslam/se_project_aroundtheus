@@ -1,6 +1,6 @@
 //import {} from
 
-class Card {
+export default class Card {
   constructor(data, cardTemplate, handleImageClick) {
     this._handleImageClick = handleImageClick;
     this._cardImgUrl = data.link;
@@ -37,5 +37,3 @@ class Card {
     return this._cardElement;
   };
 }
-
-export { Card };
