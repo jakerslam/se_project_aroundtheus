@@ -2,6 +2,7 @@
 /** Card functions */
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
+import Section from "../components/Section.js";
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -28,6 +29,23 @@ const initialCards = [
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
   },
 ];
+
+const cardSection = new Section({items:initialCards,renderer: (card)=> {
+  const newCard = createCard(card);
+  cardSection.addItem(newCard);
+}},".cards");
+
+function renderCardsNew() {
+ cardSection.renderItems();
+  };
+
+// function renderCards() {
+//   initialCards.forEach((card) => {
+//     const newCard = createCard(card);
+//     cardEls.cardDeck.append(newCard);
+//   });
+// }
+
 const genConfig = {
   formSelector: ".modal__form",
   inputSelector: ".modal__container-input",
@@ -46,12 +64,7 @@ const interfaceEls = {
   editOpenButton : document.querySelector(".profile__edit-button"),
 };
 
-function renderCards() {
-  initialCards.forEach((card) => {
-    const newCard = createCard(card);
-    cardEls.cardDeck.append(newCard);
-  });
-}
+
 
 const createCard = (card) => {
   const newCard = new Card(card, cardEls.cardTemplate, handleImageClick);
@@ -187,6 +200,6 @@ function closeModal(modal) {
   document.removeEventListener("keydown", handleEscEvent);
 }
 
-renderCards();
+renderCardsNew();
 addValidators();
 addInitEventListeners();
