@@ -57,10 +57,6 @@ const createValidator = (modal) => {
   return newValidator;
 };
 
-// function handleImageClick(cardImgUrl, cardName) {
-//   imagePopUp.open({ cardImgUrl, cardName });
-// }
-
 function fillProfileInputs() {
   const userInfo = userProfileInfo.getUserInfo();
   profileEls.profileBioInputEl.value = userInfo.userJob;
