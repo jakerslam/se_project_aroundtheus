@@ -12,6 +12,8 @@ export default class Popup {
     this._popUpElement.classList.add("modal_hidden");
     this._popUpElement.classList.remove("modal_visible-js");
     document.removeEventListener("keydown", this._handleEscClose);
+    document.removeEventListener("keydown", 
+    this._handleEscClose.bind(this));
   }
 
   _handleEscClose(evt) {
@@ -25,9 +27,8 @@ export default class Popup {
       ".modal__container-close-button"
     );
     this._popUpBox = this._popUpElement.querySelector(".modal__container_js");
-    document.addEventListener("keydown", (evt) => {
-      this._handleEscClose(evt);
-    });
+    document.addEventListener("keydown", 
+    this._handleEscClose.bind(this));
     this._closeButton.addEventListener("click", () => {
       this.close();
     });

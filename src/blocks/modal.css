@@ -42,14 +42,14 @@
   align-items: start;
   margin-left: 36px;
   font-weight: 900;
-  font-size: 24px; /* add line height for other resolution*/
+  font-size: 24px; 
   line-height: 30px;
   margin-bottom: 30px;
 }
 
 .modal__container-button {
   font-weight: 400;
-  font-size: 18px; /* add font size for mobile*/
+  font-size: 18px;
   width: 358px;
   height: 50px;
   background-color: #000;
@@ -115,9 +115,9 @@
   width: 40px;
   cursor: pointer;
   background-image: url("../images/close-icon.svg");
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat; /* Do not repeat the image */
-  background-size: cover; /* Resize the background image to cover the entire container */
+  background-position: center; 
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .modal__container-close-button:hover {
@@ -165,7 +165,7 @@
 @media screen and (min-width: 320px) and (max-width: 799px) {
   .modal__form {
     max-width: 282px;
-    padding-top: 25px; /*vs 15px*/
+    padding-top: 25px;
     padding-bottom: 25px;
   }
 

@@ -3,7 +3,7 @@
 // connect plugins to the file
 const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
-
+app.use(express.static(__dirname + '/public'));
 module.exports = {
   // connect plugins to PostCSS
   plugins: [

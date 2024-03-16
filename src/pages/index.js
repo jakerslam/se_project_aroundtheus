@@ -14,12 +14,12 @@ import {
   profileEls,
 } from "../utils/constants.js";
 
-const editProfileForm = new PopupWithForm("#edit-modal", () => {
-  saveEditProfileForm();
+const editProfileForm = new PopupWithForm("#edit-modal", (inputValues) => {
+  saveEditProfileForm(inputValues);
 });
 
-const newCardForm = new PopupWithForm("#card-modal", () => {
-  addCard();
+const newCardForm = new PopupWithForm("#card-modal", (inputValues) => {
+  addCard(inputValues);
 });
 
 const imagePopUp = new PopupWithImage("#photoViewModal");
@@ -63,19 +63,24 @@ function fillProfileInputs() {
   profileEls.nameInput.value = userInfo.userName;
 }
 
-function saveEditProfileForm() {
+function saveEditProfileForm(inputValues) {
+  console.log(inputValues);
+  //console.log(inputValues["modal__container-input_name"]);
   userProfileInfo.setUserInfo(
-    profileEls.nameInput.value,
-    profileEls.profileBioInputEl.value
-  );
+    inputValues["modal__container-input_name"],
+    inputValues["modal__container-input_bio"]
+  );  
+  //editProfileForm._getInputValues();
   profileEls.profileBioInputEl.value = "";
   profileEls.nameInput.value = "";
   editProfileForm.close();
 }
 
-function addCard() {
-  const title = newCardEls.titleInput.value;
-  const url = newCardEls.linkInput.value;
+function addCard(inputValues) {
+  console.log(inputValues);
+  const title = inputValues["modal__container-input_title"];
+  const url = inputValues["modal__container-input_url"];
+  console.log("newCardEls.linkInput in addCard in index.js:",newCardEls.linkInput);
   const cardData = { name: title, link: url };
   const newCard = createCard(cardData);
   cardSection.addItem(newCard);
