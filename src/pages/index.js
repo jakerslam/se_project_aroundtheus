@@ -1,11 +1,17 @@
+/** API token:
+ * "token":"99084de7-d532-4ca6-836e-6f6bea8ffc16"
+ *  */
+
 /** imports */
 import "./index.css";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithConfirmation from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
+import Api from "../components/Api.js";
 import {
   initialCards,
   newCardEls,
@@ -13,6 +19,41 @@ import {
   interfaceEls,
   profileEls,
 } from "../utils/constants.js";
+
+const apiToken = "99084de7-d532-4ca6-836e-6f6bea8ffc16";
+const cardApi = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1/cards",
+  headers: {
+    authorization: apiToken,
+    "Content-Type": "application/json",
+  },
+});
+
+const userApi = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1/users/me",
+  headers: {
+    authorization: apiToken,
+    "Content-Type": "application/json",
+  },
+});
+
+
+
+userApi.getInitialContent()
+.then((userData) => {
+  reloadProfile(userData);
+  console.log("userApi userData:",userData);
+});
+
+
+const reloadProfile = (userData) => {
+  userProfileInfo.setUserInfo(userData.name, userData.about);
+  userData.avatar
+    ? (document.querySelector(
+        ".profile__author-img"
+      ).src = `${userData.avatar}`)
+    : false;
+};
 
 const editProfileForm = new PopupWithForm("#edit-modal", (inputValues) => {
   saveEditProfileForm(inputValues);
@@ -22,8 +63,18 @@ const newCardForm = new PopupWithForm("#card-modal", (inputValues) => {
   addCard(inputValues);
 });
 
-const imagePopUp = new PopupWithImage("#photoViewModal");
+const editProfilePicBox = new PopupWithForm("#profile-pic-modal", (picLink) => {
+  console.log("picLink in editProfilePicBox: ",picLink['modal__container-input_url']);
+  console.log("profileEls.profilePic.src in editProfilePicBox before: ",profileEls.profilePic.src);
+  profileEls.profilePic.src = picLink['modal__container-input_url'];//'https://cdn.pornify.cc/img_new/dd6663f42f1055a441c64c74327e544bd6009c3b77a2861c93c202bdefa1cb56.jpg';
+  console.log("profileEls.profilePic.src in editProfilePicBox after: ",profileEls.profilePic.src);
+  //this.close();
+  const userInfo = userProfileInfo.getUserInfo();
+  userApi.editProfilePic(picLink['modal__container-input_url'],userInfo);
+  editProfilePicBox.close();
+});
 
+const imagePopUp = new PopupWithImage("#photoViewModal");
 const cardSection = new Section(
   {
     items: initialCards,
@@ -35,10 +86,22 @@ const cardSection = new Section(
   ".cards"
 );
 
+//api cards
+cardApi
+  .getInitialContent()
+  .then((cardObjects) => {
+    cardSection.renderItems(cardObjects);
+  });
+
 const userProfileInfo = new UserInfo(
   profileEls.profileNameEl,
   profileEls.profileBioEl
 );
+
+const confirmationModal = new PopupWithConfirmation("#confirm-delete-modal", () => {
+});
+
+confirmationModal.setEventListeners();
 
 const createCard = (card) => {
   const newCard = new Card(
@@ -46,7 +109,13 @@ const createCard = (card) => {
     newCardEls.cardTemplate,
     (cardImgUrl, cardName) => {
       imagePopUp.open({ cardImgUrl, cardName });
-    }
+    },
+    (cardId) => {
+      console.log("Handeling delete api for card in index",cardId);   
+      cardApi.deleteCard(cardId);
+    },
+    confirmationModal,
+    cardApi
   );
   return newCard.generateCard();
 };
@@ -64,27 +133,28 @@ function fillProfileInputs() {
 }
 
 function saveEditProfileForm(inputValues) {
-  console.log(inputValues);
-  //console.log(inputValues["modal__container-input_name"]);
   userProfileInfo.setUserInfo(
     inputValues["modal__container-input_name"],
     inputValues["modal__container-input_bio"]
-  );  
-  //editProfileForm._getInputValues();
+  );
   profileEls.profileBioInputEl.value = "";
   profileEls.nameInput.value = "";
+  const userData = {
+    name: inputValues["modal__container-input_name"],
+    about: inputValues["modal__container-input_bio"],
+  };
+  userApi.postProfileItem(userData);
   editProfileForm.close();
 }
 
 function addCard(inputValues) {
-  console.log(inputValues);
   const title = inputValues["modal__container-input_title"];
   const url = inputValues["modal__container-input_url"];
-  console.log("newCardEls.linkInput in addCard in index.js:",newCardEls.linkInput);
   const cardData = { name: title, link: url };
   const newCard = createCard(cardData);
   cardSection.addItem(newCard);
   newCardEls.cardForm.reset();
+  cardApi.postCard(cardData);
   newCardForm.close();
 }
 
@@ -102,11 +172,15 @@ const addInitEventListeners = () => {
     editProfileForm.open();
     fillProfileInputs();
   });
+  profileEls.profilePic.addEventListener("click", () => {
+    editProfilePicBox.open();
+   });
   newCardForm.setEventListeners();
   editProfileForm.setEventListeners();
   imagePopUp.setEventListeners();
+  editProfilePicBox.setEventListeners();
 };
 
-cardSection.renderItems();
+//cardSection.renderItems();
 addValidators();
 addInitEventListeners();

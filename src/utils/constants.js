@@ -55,4 +55,5 @@ export const profileEls = {
   ),
   profileNameEl: document.querySelector(".profile__author-title"),
   profileBioEl: document.querySelector(".profile__subtext"),
+  profilePic: document.querySelector(".profile__author-img"),
 };
