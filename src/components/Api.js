@@ -25,7 +25,7 @@ export default class Api {
 
   postProfileItem(item) {
     //console.log("item in postProfileItem:",item);
-    fetch(this._baseUrl, {
+    return fetch(this._baseUrl, {
       method: "PATCH",
       headers: {
         authorization: this._headers.authorization,
@@ -34,13 +34,12 @@ export default class Api {
       body: JSON.stringify({
         name: item.name,
         about: item.about,
-       avatar: "https://www.nakedgirls.mobi/contents/videos_screenshots/15000/15060/preview.jpg",
       })
     });
   }
 
   postCard(cardData) {
-    fetch("https://around-api.en.tripleten-services.com/v1/cards", {
+    return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
       method: "POST",
       headers: {
         authorization: this._headers.authorization,
@@ -55,7 +54,7 @@ export default class Api {
 
   editProfilePic(link,userInfo) {
 console.log("link in editProfilePic:",link); // console logs the correct link I'm trying to upload
-    fetch(`${this._baseUrl}/avatar`, {
+    return fetch(`${this._baseUrl}/avatar`, {
       method: "PATCH",
       headers: {
         authorization: this._headers.authorization,

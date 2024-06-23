@@ -28,6 +28,7 @@ export const initialCards = [
 export const newCardEls = {
   cardModal: document.querySelector("#card-modal"),
   cardForm: document.forms["card-form"],
+  cardSubmit: document.querySelector("#card-modal").querySelector(".modal__container-button"),
   titleInput: document.querySelector(".modal__container-input_card-title-js"),
   linkInput: document.querySelector(".modal__container-input_card-url-js"),
   cardTemplate: document.querySelector("#cardTemplate").content,
@@ -50,6 +51,7 @@ export const interfaceEls = {
 export const profileEls = {
   editProfileModal: document.querySelector("#edit-modal"),
   nameInput: document.querySelector("#edit-modal").querySelector(".modal__container-input_name"),
+  editProfileButton: document.querySelector("#edit-modal").querySelector(".modal__container-button"),
   profileBioInputEl: document.querySelector("#edit-modal").querySelector(
     ".modal__container-input_bio"
   ),

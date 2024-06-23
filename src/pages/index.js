@@ -20,6 +20,8 @@ import {
   profileEls,
 } from "../utils/constants.js";
 
+const profilePicFormBtn = document.querySelector("#profile-pic-modal").querySelector(".modal__container-button");
+
 const apiToken = "99084de7-d532-4ca6-836e-6f6bea8ffc16";
 const cardApi = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1/cards",
@@ -37,14 +39,10 @@ const userApi = new Api({
   },
 });
 
-
-
-userApi.getInitialContent()
-.then((userData) => {
+userApi.getInitialContent().then((userData) => {
   reloadProfile(userData);
-  console.log("userApi userData:",userData);
+  console.log("userApi userData:", userData);
 });
-
 
 const reloadProfile = (userData) => {
   userProfileInfo.setUserInfo(userData.name, userData.about);
@@ -64,13 +62,27 @@ const newCardForm = new PopupWithForm("#card-modal", (inputValues) => {
 });
 
 const editProfilePicBox = new PopupWithForm("#profile-pic-modal", (picLink) => {
-  console.log("picLink in editProfilePicBox: ",picLink['modal__container-input_url']);
-  console.log("profileEls.profilePic.src in editProfilePicBox before: ",profileEls.profilePic.src);
-  profileEls.profilePic.src = picLink['modal__container-input_url'];//'https://cdn.pornify.cc/img_new/dd6663f42f1055a441c64c74327e544bd6009c3b77a2861c93c202bdefa1cb56.jpg';
-  console.log("profileEls.profilePic.src in editProfilePicBox after: ",profileEls.profilePic.src);
+  console.log(
+    "picLink in editProfilePicBox: ",
+    picLink["modal__container-input_url"]
+  );
+  console.log(
+    "profileEls.profilePic.src in editProfilePicBox before: ",
+    profileEls.profilePic.src
+  );
+  profileEls.profilePic.src = picLink["modal__container-input_url"];
+  console.log(
+    "profileEls.profilePic.src in editProfilePicBox after: ",
+    profileEls.profilePic.src
+  );
   //this.close();
   const userInfo = userProfileInfo.getUserInfo();
-  userApi.editProfilePic(picLink['modal__container-input_url'],userInfo);
+  console.log("profilePicFormBtn:",profilePicFormBtn);
+  profilePicFormBtn.value = "Saving...";
+  userApi.editProfilePic(picLink["modal__container-input_url"], userInfo)
+  .then(result => {
+  profilePicFormBtn.value = "Save";
+  });
   editProfilePicBox.close();
 });
 
@@ -87,19 +99,19 @@ const cardSection = new Section(
 );
 
 //api cards
-cardApi
-  .getInitialContent()
-  .then((cardObjects) => {
-    cardSection.renderItems(cardObjects);
-  });
+cardApi.getInitialContent().then((cardObjects) => {
+  cardSection.renderItems(cardObjects);
+});
 
 const userProfileInfo = new UserInfo(
   profileEls.profileNameEl,
   profileEls.profileBioEl
 );
 
-const confirmationModal = new PopupWithConfirmation("#confirm-delete-modal", () => {
-});
+const confirmationModal = new PopupWithConfirmation(
+  "#confirm-delete-modal",
+  () => {}
+);
 
 confirmationModal.setEventListeners();
 
@@ -111,7 +123,7 @@ const createCard = (card) => {
       imagePopUp.open({ cardImgUrl, cardName });
     },
     (cardId) => {
-      console.log("Handeling delete api for card in index",cardId);   
+      console.log("Handeling delete api for card in index", cardId);
       cardApi.deleteCard(cardId);
     },
     confirmationModal,
@@ -143,7 +155,12 @@ function saveEditProfileForm(inputValues) {
     name: inputValues["modal__container-input_name"],
     about: inputValues["modal__container-input_bio"],
   };
-  userApi.postProfileItem(userData);
+
+  profileEls.editProfileButton.value = "Saving...";
+  userApi.postProfileItem(userData).then((result) => {
+    profileEls.editProfileButton.value = "Save";
+  });
+
   editProfileForm.close();
 }
 
@@ -154,7 +171,10 @@ function addCard(inputValues) {
   const newCard = createCard(cardData);
   cardSection.addItem(newCard);
   newCardEls.cardForm.reset();
-  cardApi.postCard(cardData);
+  newCardEls.cardSubmit.value = "Saving...";
+  cardApi.postCard(cardData).then((results) => {
+    newCardEls.cardSubmit.value = "Create";
+  });
   newCardForm.close();
 }
 
@@ -174,7 +194,7 @@ const addInitEventListeners = () => {
   });
   profileEls.profilePic.addEventListener("click", () => {
     editProfilePicBox.open();
-   });
+  });
   newCardForm.setEventListeners();
   editProfileForm.setEventListeners();
   imagePopUp.setEventListeners();
