@@ -11,22 +11,7 @@ export default class Api {
       headers: {
         authorization: this._headers.authorization,
       },
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .catch((err) => {
-        console.error(err);
-      }).then(res => {
-        if (res.ok) {
-        return res.json();
-        }
-        // if the server returns an error, reject the promise
-        return Promise.reject(`Error: ${res.status}`);
-       });
+    });
   }
 
   postProfileItem(item) {
@@ -41,13 +26,7 @@ export default class Api {
         name: item.name,
         about: item.about,
       })
-    }).then(res => {
-      if (res.ok) {
-      return res.json();
-      }
-      // if the server returns an error, reject the promise
-      return Promise.reject(`Error: ${res.status}`);
-     });
+    });
   }
 
   postCard(cardData) {
@@ -61,13 +40,7 @@ export default class Api {
         name: cardData.name,
         link: cardData.link,
       })
-    }).then(res => {
-      if (res.ok) {
-      return res.json();
-      }
-      // if the server returns an error, reject the promise
-      return Promise.reject(`Error: ${res.status}`);
-     });
+    });
   }
 
   editProfilePic(link,userInfo) {
@@ -83,13 +56,7 @@ console.log("link in editProfilePic:",link); // console logs the correct link I'
         // name: userInfo.userJob,
         // about: userInfo.userName,
       })    
-    }).then(res => {
-      if (res.ok) {
-      return res.json();
-      }
-      // if the server returns an error, reject the promise
-      return Promise.reject(`Error: ${res.status}`);
-     });
+    });
 
   }
 
@@ -101,13 +68,7 @@ console.log("link in editProfilePic:",link); // console logs the correct link I'
             authorization: this._headers.authorization,
             "Content-Type": "application/json",
           }
-        }).then(res => {
-          if (res.ok) {
-          return res.json();
-          }
-          // if the server returns an error, reject the promise
-          return Promise.reject(`Error: ${res.status}`);
-         });
+        });
       }
   // other methods for working with the API
 }

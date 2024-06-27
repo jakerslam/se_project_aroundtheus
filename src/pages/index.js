@@ -39,9 +39,16 @@ const userApi = new Api({
   },
 });
 
-userApi.getInitialContent().then((userData) => {
+userApi.getInitialContent()
+.then((res) => {
+  return checkServerResponse(res);
+})
+.then((userData) => {
   reloadProfile(userData);
   console.log("userApi userData:", userData);
+})
+.catch((err) => {
+  console.error(err);
 });
 
 const reloadProfile = (userData) => {
@@ -98,9 +105,23 @@ const cardSection = new Section(
   ".cards"
 );
 
+const checkServerResponse = (res) => {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Error: ${res.status}`);
+}
+
 //api cards
-cardApi.getInitialContent().then((cardObjects) => {
+cardApi.getInitialContent()
+.then((res) => {
+  return checkServerResponse(res);
+})
+.then((cardObjects) => {
   cardSection.renderItems(cardObjects);
+})
+.catch((err) => {
+  console.error(err);
 });
 
 const userProfileInfo = new UserInfo(

@@ -13,6 +13,7 @@ export default class Section {
     // }
 
     renderItems(overloadedItems) {
+        console.log("overloadedItems:",overloadedItems);
         overloadedItems.forEach(item => {
             this._renderer(item);
         });

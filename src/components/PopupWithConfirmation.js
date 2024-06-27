@@ -11,8 +11,8 @@ export default class PopupWithConfirmation extends Popup {
 _handleSubmit(evt) {
     evt.preventDefault();
     this._handelConfiirmation();
-    console.log("submit evetn for ",this);
-    this.close();
+    console.log("submit event for ",this);
+    //this.close();
 }
 
   setEventListeners() {
