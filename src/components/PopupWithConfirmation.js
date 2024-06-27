@@ -18,6 +18,7 @@ _handleSubmit(evt) {
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener("submit", (evt) => {
+      this._handleSubmit(evt);
     });
   }
 }
