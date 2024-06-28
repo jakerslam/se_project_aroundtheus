@@ -15,7 +15,6 @@ export default class Api {
   }
 
   postProfileItem(item) {
-    //console.log("item in postProfileItem:",item);
     return fetch(this._baseUrl, {
       method: "PATCH",
       headers: {
@@ -44,7 +43,6 @@ export default class Api {
   }
 
   editProfilePic(link,userInfo) {
-console.log("link in editProfilePic:",link); // console logs the correct link I'm trying to upload
     return fetch(`${this._baseUrl}/avatar`, {
       method: "PATCH",
       headers: {
@@ -53,15 +51,12 @@ console.log("link in editProfilePic:",link); // console logs the correct link I'
       },
       body: JSON.stringify({
         avatar:link,
-        // name: userInfo.userJob,
-        // about: userInfo.userName,
       })    
     });
 
   }
 
   deleteCard(cardId) {
-    //console.log("link in editProfilePic:",link);
        return fetch(`${this._baseUrl}/${cardId}`, {
           method: "DELETE",
           headers: {

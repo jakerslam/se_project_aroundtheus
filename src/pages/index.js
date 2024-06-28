@@ -48,7 +48,6 @@ userApi
   })
   .then((userData) => {
     reloadProfile(userData);
-    //console.log("userApi userData:", userData);
   })
   .catch((err) => {
     console.error(err);
@@ -72,22 +71,8 @@ const newCardForm = new PopupWithForm("#card-modal", (inputValues) => {
 });
 
 const editProfilePicBox = new PopupWithForm("#profile-pic-modal", (picLink) => {
-  // console.log(
-  //   "picLink in editProfilePicBox: ",
-  //   picLink["modal__container-input_url"]
-  // );
-  // console.log(
-  //   "profileEls.profilePic.src in editProfilePicBox before: ",
-  //   profileEls.profilePic.src
-  // );
   profileEls.profilePic.src = picLink["modal__container-input_url"];
-  console.log(
-    "profileEls.profilePic.src in editProfilePicBox after: ",
-    profileEls.profilePic.src
-  );
-  //this.close();
   const userInfo = userProfileInfo.getUserInfo();
-  //console.log("profilePicFormBtn:",profilePicFormBtn);
   profilePicFormBtn.value = "Saving...";
   userApi
     .editProfilePic(picLink["modal__container-input_url"], userInfo)
@@ -151,7 +136,6 @@ const createCard = (card) => {
       imagePopUp.open({ cardImgUrl, cardName });
     },
     (cardId) => {
-      console.log("Handeling delete api for card in index", cardId);
       cardApi.deleteCard(cardId);
     },
     confirmationModal,
@@ -239,6 +223,5 @@ const addInitEventListeners = () => {
   editProfilePicBox.setEventListeners();
 };
 
-//cardSection.renderItems();
 addValidators();
 addInitEventListeners();

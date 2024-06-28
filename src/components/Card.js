@@ -22,7 +22,6 @@ export default class Card {
   }
 
   deleteCard = () => {
-    console.log("deleteCard in card class for card ",this._id);
     this._cardElement.remove();
     this._cardElement = null;
     this._handleDeleteApi(this._id);
@@ -35,7 +34,6 @@ export default class Card {
       this._confirmationModal._form.addEventListener("submit", this.deleteCard);
     });
     document.addEventListener(this._confirmationModal.close, () => {
-      console.log("removing deleteCard event listener");
       this._confirmationModal._form.removeEventListener("submit", this.deleteCard);
     });
     this._cardImage.addEventListener("click", () => {
@@ -45,8 +43,6 @@ export default class Card {
       this._confirmationModal._handleSubmit();
      this._confirmationModal.close();
     });
-    //console.log("this._confirmationModal._form in card:",this._confirmationModal._form);
-    //console.log("this._confirmationModal._form:",this._confirmationModal._form);
   }
 
   _handleLike = () => {
@@ -76,12 +72,9 @@ export default class Card {
     this._cardImage.alt = "An image of " + this._cardName;
     this._cardTitle.textContent = this._cardName;
     this._setEventListeners();
-    //console.log("this._isLiked:",this._isLiked);
-    //this._confirmDeleteBox.setEventListeners();
     if (this._isLiked) {
       this._likeButton.classList.add("card__heart-button_clicked");
     }
-    //console.log("this._confirmDeleteBox in card.js:",this._confirmDeleteBox);
     return this._cardElement;
   };
 }
