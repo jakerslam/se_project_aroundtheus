@@ -72,10 +72,9 @@ const newCardForm = new PopupWithForm("#card-modal", (inputValues) => {
 
 const editProfilePicBox = new PopupWithForm("#profile-pic-modal", (picLink) => {
   profileEls.profilePic.src = picLink["modal__container-input_url"];
-  const userInfo = userProfileInfo.getUserInfo();
   profilePicFormBtn.value = "Saving...";
   userApi
-    .editProfilePic(picLink["modal__container-input_url"], userInfo)
+    .editProfilePic(picLink["modal__container-input_url"])
     .then(() => {
       editProfilePicBox.close();
     })

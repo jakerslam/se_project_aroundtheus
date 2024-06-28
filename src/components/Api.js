@@ -42,7 +42,7 @@ export default class Api {
     });
   }
 
-  editProfilePic(link,userInfo) {
+  editProfilePic(link) {
     return fetch(`${this._baseUrl}/avatar`, {
       method: "PATCH",
       headers: {
