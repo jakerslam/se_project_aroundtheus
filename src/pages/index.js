@@ -91,11 +91,11 @@ const editProfilePicBox = new PopupWithForm("#profile-pic-modal", (picLink) => {
   profilePicFormBtn.value = "Saving...";
   userApi
     .editProfilePic(picLink["modal__container-input_url"], userInfo)
-    .then((result) => {
-      profilePicFormBtn.value = "Save";
-    })
-    .then((res) => {
+    .then(() => {
       editProfilePicBox.close();
+    })
+    .finally(() => {
+      profilePicFormBtn.value = "Save";
     });
 });
 
@@ -185,12 +185,14 @@ function saveEditProfileForm(inputValues) {
   };
 
   profileEls.editProfileButton.value = "Saving...";
-  userApi.postProfileItem(userData).then((result) => {
-    profileEls.editProfileButton.value = "Save";
-  })
-  .then(res => {
-    editProfileForm.close();
-  });
+  userApi
+    .postProfileItem(userData)
+    .then((result) => {
+      profileEls.editProfileButton.value = "Save";
+    })
+    .then((res) => {
+      editProfileForm.close();
+    });
 }
 
 function addCard(inputValues) {
@@ -201,12 +203,17 @@ function addCard(inputValues) {
   cardSection.addItem(newCard);
   newCardEls.cardForm.reset();
   newCardEls.cardSubmit.value = "Saving...";
-  cardApi.postCard(cardData).then((results) => {
-    newCardEls.cardSubmit.value = "Create";
-  })
-  .then(res => {
-    newCardForm.close();
-  });
+  cardApi
+    .postCard(cardData)
+    .then((results) => {
+      newCardEls.cardSubmit.value = "Create";
+    })
+    .then((res) => {
+      return checkServerResponse(res);
+    })
+    .finally(() => {
+      newCardForm.close();
+    });
 }
 
 const addValidators = () => {
