@@ -21,8 +21,8 @@ export default class Card {
 
   }
 
-  _handleDelete = () => {
-    console.log("_handleDelete in card class for card ",this._id);
+  deleteCard = () => {
+    console.log("deleteCard in card class for card ",this._id);
     this._cardElement.remove();
     this._cardElement = null;
     this._handleDeleteApi(this._id);
@@ -32,11 +32,11 @@ export default class Card {
     this._likeButton.addEventListener("click", this._handleLike);
     this._deleteButton.addEventListener("click", () => {
       this._confirmationModal.open();
-      this._confirmationModal._form.addEventListener("submit", this._handleDelete);
+      this._confirmationModal._form.addEventListener("submit", this.deleteCard);
     });
     document.addEventListener(this._confirmationModal.close, () => {
-      console.log("removing _handleDelete event listener");
-      this._confirmationModal._form.removeEventListener("submit", this._handleDelete);
+      console.log("removing deleteCard event listener");
+      this._confirmationModal._form.removeEventListener("submit", this.deleteCard);
     });
     this._cardImage.addEventListener("click", () => {
       this._handleImageClick(this._cardImgUrl, this._cardName);

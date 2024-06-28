@@ -20,7 +20,9 @@ import {
   profileEls,
 } from "../utils/constants.js";
 
-const profilePicFormBtn = document.querySelector("#profile-pic-modal").querySelector(".modal__container-button");
+const profilePicFormBtn = document
+  .querySelector("#profile-pic-modal")
+  .querySelector(".modal__container-button");
 
 const apiToken = "99084de7-d532-4ca6-836e-6f6bea8ffc16";
 const cardApi = new Api({
@@ -39,17 +41,18 @@ const userApi = new Api({
   },
 });
 
-userApi.getInitialContent()
-.then((res) => {
-  return checkServerResponse(res);
-})
-.then((userData) => {
-  reloadProfile(userData);
-  console.log("userApi userData:", userData);
-})
-.catch((err) => {
-  console.error(err);
-});
+userApi
+  .getInitialContent()
+  .then((res) => {
+    return checkServerResponse(res);
+  })
+  .then((userData) => {
+    reloadProfile(userData);
+    //console.log("userApi userData:", userData);
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 const reloadProfile = (userData) => {
   userProfileInfo.setUserInfo(userData.name, userData.about);
@@ -69,14 +72,14 @@ const newCardForm = new PopupWithForm("#card-modal", (inputValues) => {
 });
 
 const editProfilePicBox = new PopupWithForm("#profile-pic-modal", (picLink) => {
-  console.log(
-    "picLink in editProfilePicBox: ",
-    picLink["modal__container-input_url"]
-  );
-  console.log(
-    "profileEls.profilePic.src in editProfilePicBox before: ",
-    profileEls.profilePic.src
-  );
+  // console.log(
+  //   "picLink in editProfilePicBox: ",
+  //   picLink["modal__container-input_url"]
+  // );
+  // console.log(
+  //   "profileEls.profilePic.src in editProfilePicBox before: ",
+  //   profileEls.profilePic.src
+  // );
   profileEls.profilePic.src = picLink["modal__container-input_url"];
   console.log(
     "profileEls.profilePic.src in editProfilePicBox after: ",
@@ -84,13 +87,16 @@ const editProfilePicBox = new PopupWithForm("#profile-pic-modal", (picLink) => {
   );
   //this.close();
   const userInfo = userProfileInfo.getUserInfo();
-  console.log("profilePicFormBtn:",profilePicFormBtn);
+  //console.log("profilePicFormBtn:",profilePicFormBtn);
   profilePicFormBtn.value = "Saving...";
-  userApi.editProfilePic(picLink["modal__container-input_url"], userInfo)
-  .then(result => {
-  profilePicFormBtn.value = "Save";
-  });
-  editProfilePicBox.close();
+  userApi
+    .editProfilePic(picLink["modal__container-input_url"], userInfo)
+    .then((result) => {
+      profilePicFormBtn.value = "Save";
+    })
+    .then((res) => {
+      editProfilePicBox.close();
+    });
 });
 
 const imagePopUp = new PopupWithImage("#photoViewModal");
@@ -110,19 +116,20 @@ const checkServerResponse = (res) => {
     return res.json();
   }
   return Promise.reject(`Error: ${res.status}`);
-}
+};
 
 //api cards
-cardApi.getInitialContent()
-.then((res) => {
-  return checkServerResponse(res);
-})
-.then((cardObjects) => {
-  cardSection.renderItems(cardObjects);
-})
-.catch((err) => {
-  console.error(err);
-});
+cardApi
+  .getInitialContent()
+  .then((res) => {
+    return checkServerResponse(res);
+  })
+  .then((cardObjects) => {
+    cardSection.renderItems(cardObjects);
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 const userProfileInfo = new UserInfo(
   profileEls.profileNameEl,
@@ -180,9 +187,10 @@ function saveEditProfileForm(inputValues) {
   profileEls.editProfileButton.value = "Saving...";
   userApi.postProfileItem(userData).then((result) => {
     profileEls.editProfileButton.value = "Save";
+  })
+  .then(res => {
+    editProfileForm.close();
   });
-
-  editProfileForm.close();
 }
 
 function addCard(inputValues) {
@@ -195,8 +203,10 @@ function addCard(inputValues) {
   newCardEls.cardSubmit.value = "Saving...";
   cardApi.postCard(cardData).then((results) => {
     newCardEls.cardSubmit.value = "Create";
+  })
+  .then(res => {
+    newCardForm.close();
   });
-  newCardForm.close();
 }
 
 const addValidators = () => {
