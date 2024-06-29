@@ -71,15 +71,24 @@ const newCardForm = new PopupWithForm("#card-modal", (inputValues) => {
 });
 
 const editProfilePicBox = new PopupWithForm("#profile-pic-modal", (picLink) => {
-  profileEls.profilePic.src = picLink["modal__container-input_url"];
-  profilePicFormBtn.value = "Saving...";
+  //profilePicFormBtn.value = "Saving...";
+  renderSaveVisual(profilePicFormBtn, true);
   userApi
     .editProfilePic(picLink["modal__container-input_url"])
+    .then((res) => {
+      checkServerResponse(res);
+    })
     .then(() => {
+      //profileEls.profilePic.src = picLink["modal__container-input_url"];
+      userProfileInfo.setAvatar(picLink["modal__container-input_url"]);
       editProfilePicBox.close();
     })
     .finally(() => {
-      profilePicFormBtn.value = "Save";
+      //profilePicFormBtn.value = "Save";
+      renderSaveVisual(profilePicFormBtn, false);
+    })
+    .catch((err) => {
+      console.error(err);
     });
 });
 
@@ -117,7 +126,8 @@ cardApi
 
 const userProfileInfo = new UserInfo(
   profileEls.profileNameEl,
-  profileEls.profileBioEl
+  profileEls.profileBioEl,
+  profileEls.profilePic,
 );
 
 const confirmationModal = new PopupWithConfirmation(
@@ -167,16 +177,27 @@ function saveEditProfileForm(inputValues) {
     about: inputValues["modal__container-input_bio"],
   };
 
-  profileEls.editProfileButton.value = "Saving...";
+  //profileEls.editProfileButton.value = "Saving...";
+
+  renderSaveVisual(profileEls.editProfileButton, true);
   userApi
     .postProfileItem(userData)
-    .then((result) => {
-      profileEls.editProfileButton.value = "Save";
-    })
-    .then((res) => {
+    .then(() => {
       editProfileForm.close();
+    })
+    .finally(() => {
+      //profileEls.editProfileButton.value = "Save";
+      renderSaveVisual(profileEls.editProfileButton, false);
     });
 }
+
+const renderSaveVisual = (el, isSaving, altText) => {
+  if (isSaving) {
+    altText ? (el.value = altText) : (el.value = "Saving...");
+  } else {
+    altText ? (el.value = altText) : (el.value = "Save");
+  }
+};
 
 function addCard(inputValues) {
   const title = inputValues["modal__container-input_title"];
@@ -185,17 +206,19 @@ function addCard(inputValues) {
   const newCard = createCard(cardData);
   cardSection.addItem(newCard);
   newCardEls.cardForm.reset();
-  newCardEls.cardSubmit.value = "Saving...";
+  //newCardEls.cardSubmit.value = "Saving...";
+  renderSaveVisual(newCardEls.cardSubmit, true);
   cardApi
     .postCard(cardData)
-    .then((results) => {
-      newCardEls.cardSubmit.value = "Create";
-    })
     .then((res) => {
       return checkServerResponse(res);
     })
-    .finally(() => {
+    .then(() => {
       newCardForm.close();
+    })
+    .finally(() => {
+      // newCardEls.cardSubmit.value = "Create";
+      renderSaveVisual(newCardEls.cardSubmit, false, "Create");
     });
 }
 
