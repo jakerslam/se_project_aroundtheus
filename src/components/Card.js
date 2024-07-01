@@ -1,7 +1,13 @@
-
-
 export default class Card {
-  constructor(data, cardTemplate, handleImageClick, handleDeleteApi,confirmationModal,cardApi) {
+  constructor(
+    data,
+    cardTemplate,
+    handleImageClick,
+    handleDelete,
+    confirmationModal,
+    cardLikeHandeler,
+    setDeleteListeners,
+  ) {
     this._handleImageClick = handleImageClick;
     this._cardImgUrl = data.link;
     this._cardName = data.name;
@@ -14,57 +20,44 @@ export default class Card {
     );
     this._cardImage = this._cardElement.querySelector(".card__img");
     this._cardTitle = this._cardElement.querySelector(".card__title");
-    this._handleDeleteApi = handleDeleteApi;
-    this._confirmationModal = confirmationModal
-    this._authorizationVar = cardApi._headers.authorization;
-    this._apiUrl = cardApi._baseUrl;
-
+    this._handleDelete = handleDelete;
+    this._confirmationModal = confirmationModal;
+    // this._authorizationVar = cardApi._headers.authorization;
+    // this._apiUrl = cardApi._baseUrl;
+    this._cardLikeHandeler = cardLikeHandeler;
+    this.setDeleteListeners = setDeleteListeners;
   }
 
   deleteCard = () => {
     this._cardElement.remove();
     this._cardElement = null;
-    this._handleDeleteApi(this._id);
+    this._handleDelete(this._id);
   };
 
   _setEventListeners() {
     this._likeButton.addEventListener("click", this._handleLike);
-    this._deleteButton.addEventListener("click", () => {
-      this._confirmationModal.open();
-      this._confirmationModal._form.addEventListener("submit", this.deleteCard);
-    });
-    document.addEventListener(this._confirmationModal.close, () => {
-      this._confirmationModal._form.removeEventListener("submit", this.deleteCard);
-    });
+    // this._deleteButton.addEventListener("click", () => {
+    //   this._confirmationModal.open();
+    //   this._confirmationModal._form.addEventListener("submit", this.deleteCard);
+    // });
+    // document.addEventListener(this._confirmationModal.close, () => {
+    //   this._confirmationModal._form.removeEventListener(
+    //     "submit",
+    //     this.deleteCard
+    //   );
+    // });
     this._cardImage.addEventListener("click", () => {
       this._handleImageClick(this._cardImgUrl, this._cardName);
     });
-    this._confirmationModal._form.addEventListener("submit", () => {
-      this._confirmationModal._handleSubmit();
-     this._confirmationModal.close();
-    });
+    // this._confirmationModal._form.addEventListener("submit", () => {
+    //   this._confirmationModal._handleSubmit();
+    //   this._confirmationModal.close();
+    // });
+    this.setDeleteListeners(this);
   }
 
   _handleLike = () => {
-    if (!this._isLiked) {
-      fetch(`${this._apiUrl}/${this._id}/likes`, {
-      method: "PUT",
-      headers: {
-        authorization: this._authorizationVar,
-        "Content-type": "application/json",
-      },
-    });
-    this._likeButton.classList.add("card__heart-button_clicked");
-  } else {
-    fetch(`${this._apiUrl}/${this._id}/likes`, {
-      method: "DELETE",
-      headers: {
-        authorization: this._authorizationVar,
-        "Content-type": "application/json",
-      },
-    });
-    this._likeButton.classList.remove("card__heart-button_clicked");
-    }
+    this._isLiked = this._cardLikeHandeler(this._id, this._likeButton, this._isLiked);
   };
 
   generateCard = () => {

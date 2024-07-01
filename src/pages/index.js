@@ -13,39 +13,30 @@ import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 import {
-  initialCards,
   newCardEls,
   genConfig,
   interfaceEls,
   profileEls,
+  apiVars,
 } from "../utils/constants.js";
 
 const profilePicFormBtn = document
   .querySelector("#profile-pic-modal")
   .querySelector(".modal__container-button");
 
-const apiToken = "99084de7-d532-4ca6-836e-6f6bea8ffc16";
-const cardApi = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1/cards",
+const mainApi = new Api({
+  baseUrl: apiVars.baseUrl,
   headers: {
-    authorization: apiToken,
+    authorization: apiVars.apiToken,
     "Content-Type": "application/json",
   },
 });
 
-const userApi = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1/users/me",
-  headers: {
-    authorization: apiToken,
-    "Content-Type": "application/json",
-  },
-});
-
-userApi
-  .getInitialContent()
-  .then((res) => {
-    return checkServerResponse(res);
-  })
+mainApi
+  .getInitialProfile()
+  // .then((res) => {
+  //   return checkServerResponse(res);
+  // })
   .then((userData) => {
     reloadProfile(userData);
   })
@@ -71,20 +62,17 @@ const newCardForm = new PopupWithForm("#card-modal", (inputValues) => {
 });
 
 const editProfilePicBox = new PopupWithForm("#profile-pic-modal", (picLink) => {
-  //profilePicFormBtn.value = "Saving...";
   renderSaveVisual(profilePicFormBtn, true);
-  userApi
+  mainApi
     .editProfilePic(picLink["modal__container-input_url"])
-    .then((res) => {
-      checkServerResponse(res);
-    })
+    // .then((res) => {
+    //   checkServerResponse(res);
+    // })
     .then(() => {
-      //profileEls.profilePic.src = picLink["modal__container-input_url"];
       userProfileInfo.setAvatar(picLink["modal__container-input_url"]);
       editProfilePicBox.close();
     })
     .finally(() => {
-      //profilePicFormBtn.value = "Save";
       renderSaveVisual(profilePicFormBtn, false);
     })
     .catch((err) => {
@@ -95,7 +83,7 @@ const editProfilePicBox = new PopupWithForm("#profile-pic-modal", (picLink) => {
 const imagePopUp = new PopupWithImage("#photoViewModal");
 const cardSection = new Section(
   {
-    items: initialCards,
+    items: {},
     renderer: (card) => {
       const newCard = createCard(card);
       cardSection.addItem(newCard);
@@ -112,12 +100,13 @@ const checkServerResponse = (res) => {
 };
 
 //api cards
-cardApi
-  .getInitialContent()
-  .then((res) => {
-    return checkServerResponse(res);
-  })
+mainApi
+  .getInitialCards()
+  // .then((res) => {
+  //   return checkServerResponse(res);
+  // })
   .then((cardObjects) => {
+    console.log("cardObjects:",cardObjects);
     cardSection.renderItems(cardObjects);
   })
   .catch((err) => {
@@ -127,7 +116,7 @@ cardApi
 const userProfileInfo = new UserInfo(
   profileEls.profileNameEl,
   profileEls.profileBioEl,
-  profileEls.profilePic,
+  profileEls.profilePic
 );
 
 const confirmationModal = new PopupWithConfirmation(
@@ -145,10 +134,32 @@ const createCard = (card) => {
       imagePopUp.open({ cardImgUrl, cardName });
     },
     (cardId) => {
-      cardApi.deleteCard(cardId);
+      console.log("cardId:", cardId);
+      mainApi.deleteCard(cardId);
     },
     confirmationModal,
-    cardApi
+    mainApi.toggleCardLike,
+    // delete confirmation event listeners
+    (card) => {
+      card._confirmationModal._form.addEventListener("submit", () => {
+        card._confirmationModal._handleSubmit();
+        card._confirmationModal.close();
+
+        document.addEventListener(card._confirmationModal.close, () => {
+          card._confirmationModal._form.removeEventListener(
+            "submit",
+            card.deleteCard
+          );
+        });
+      });
+      card._deleteButton.addEventListener("click", () => {
+        card._confirmationModal.open();
+        card._confirmationModal._form.addEventListener(
+          "submit",
+          card.deleteCard
+        );
+      });
+    },
   );
   return newCard.generateCard();
 };
@@ -177,16 +188,13 @@ function saveEditProfileForm(inputValues) {
     about: inputValues["modal__container-input_bio"],
   };
 
-  //profileEls.editProfileButton.value = "Saving...";
-
   renderSaveVisual(profileEls.editProfileButton, true);
-  userApi
+  mainApi
     .postProfileItem(userData)
     .then(() => {
       editProfileForm.close();
     })
     .finally(() => {
-      //profileEls.editProfileButton.value = "Save";
       renderSaveVisual(profileEls.editProfileButton, false);
     });
 }
@@ -206,18 +214,16 @@ function addCard(inputValues) {
   const newCard = createCard(cardData);
   cardSection.addItem(newCard);
   newCardEls.cardForm.reset();
-  //newCardEls.cardSubmit.value = "Saving...";
   renderSaveVisual(newCardEls.cardSubmit, true);
-  cardApi
+  mainApi
     .postCard(cardData)
-    .then((res) => {
-      return checkServerResponse(res);
-    })
+    // .then((res) => {
+    //   return checkServerResponse(res);
+    // })
     .then(() => {
       newCardForm.close();
     })
     .finally(() => {
-      // newCardEls.cardSubmit.value = "Create";
       renderSaveVisual(newCardEls.cardSubmit, false, "Create");
     });
 }
