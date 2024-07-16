@@ -36,6 +36,11 @@
   padding-bottom: 20px;
 }
 
+.modal__form_confirm-delete, .modal__form_profile-pic {
+  padding-top: 34px;
+  padding-bottom:34px;
+}
+
 .modal__container-header {
   margin: 0px;
   display: inline;
@@ -45,6 +50,10 @@
   font-size: 24px; 
   line-height: 30px;
   margin-bottom: 30px;
+}
+
+.modal__container-header_profile-pic {
+  margin-bottom: 41px;
 }
 
 .modal__container-button {
@@ -185,6 +194,11 @@
     margin-bottom: 65px;
   }
 
+.modal__container-header_confirm-delete {
+
+  margin-bottom: 11px;
+}
+  
   .modal__container-button {
     font-size: 14px;
     line-height: 17px;
