@@ -22,8 +22,6 @@ export default class Card {
     this._cardTitle = this._cardElement.querySelector(".card__title");
     this._handleDelete = handleDelete;
     this._confirmationModal = confirmationModal;
-    // this._authorizationVar = cardApi._headers.authorization;
-    // this._apiUrl = cardApi._baseUrl;
     this._cardLikeHandeler = cardLikeHandeler;
     this.setDeleteListeners = setDeleteListeners;
   }
@@ -32,35 +30,48 @@ export default class Card {
     this._cardElement.remove();
     this._cardElement = null;
     this._handleDelete(this._id);
+    this._confirmationModal._form.removeEventListener(
+      "submit",
+      this.deleteCard
+    );
   };
 
+
   _setEventListeners() {
-    this._likeButton.addEventListener("click", this._handleLike);
-    // this._deleteButton.addEventListener("click", () => {
-    //   this._confirmationModal.open();
-    //   this._confirmationModal._form.addEventListener("submit", this.deleteCard);
-    // });
-    // document.addEventListener(this._confirmationModal.close, () => {
-    //   this._confirmationModal._form.removeEventListener(
-    //     "submit",
-    //     this.deleteCard
-    //   );
-    // });
+    this._likeButton.addEventListener("click", this.setIsLiked);
+
     this._cardImage.addEventListener("click", () => {
       this._handleImageClick(this._cardImgUrl, this._cardName);
     });
-    // this._confirmationModal._form.addEventListener("submit", () => {
-    //   this._confirmationModal._handleSubmit();
-    //   this._confirmationModal.close();
-    // });
+
+    this._deleteButton.addEventListener("click", () => {
+      this._confirmationModal.open();
+      this._confirmationModal._form.addEventListener(
+        "submit",
+        this.deleteCard
+      );
+    });
+
     this.setDeleteListeners(this);
   }
 
-  _handleLike = () => {
-    this._isLiked = this._cardLikeHandeler(this._id, this._likeButton, this._isLiked);
+  isLiked() {
+    return this._isLiked;
+  }
+
+  setIsLiked = () => {
+    this._cardLikeHandeler(this._id, this._likeButton, this._isLiked);
+    if (this.isLiked()) {
+      this._likeButton.classList.remove("card__heart-button_clicked");
+      this._isLiked = false;
+    } else {
+      this._likeButton.classList.add("card__heart-button_clicked");
+      this._isLiked = true;
+    }
   };
 
   generateCard = () => {
+    //this.setIsLiked();
     this._cardImage.src = this._cardImgUrl;
     this._cardImage.alt = "An image of " + this._cardName;
     this._cardTitle.textContent = this._cardName;

@@ -5,6 +5,13 @@ export default class Api {
     this._headers = options.headers;
   }
 
+  _proccessResponse = (res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Error: ${res.status}`); 
+  }
+
   getInitialProfile() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
@@ -13,11 +20,7 @@ export default class Api {
       },
     })
     .then((res)=> {
-      if (res.ok) {
-        console.log("res in getInitialProfile:",res);
-        //console.log("res.json() in getInitialProfile:",res.json());
-        return res.json();
-      }
+      return this._proccessResponse(res);
     });
   }
 
@@ -28,13 +31,8 @@ export default class Api {
         authorization: this._headers.authorization,
       },
     })
-    .then((res)=> {
-      if (res.ok) {
-        console.log("res in getInitialCards:",res);
-        //console.log("JSON.parse(res) in getInitialCards:",JSON.parse(res.json()));
-        //console.log("res.json() in getInitialCards:",res.json());
-        return res.json();
-      }
+    .then((res)=> { 
+      return this._proccessResponse(res);
     });
   }
 
@@ -49,6 +47,9 @@ export default class Api {
         name: item.name,
         about: item.about,
       })
+    })
+    .then((res)=> {
+      return this._proccessResponse(res);
     });
   }
 
@@ -63,6 +64,9 @@ export default class Api {
         name: cardData.name,
         link: cardData.link,
       })
+    })
+    .then((res)=> {
+      return this._proccessResponse(res);
     });
   }
 
@@ -76,6 +80,9 @@ export default class Api {
       body: JSON.stringify({
         avatar:link,
       })    
+    })
+    .then((res)=> {
+      return this._proccessResponse(res);
     });
 
   }
@@ -88,6 +95,9 @@ export default class Api {
             authorization: this._headers.authorization,
             "Content-Type": "application/json",
           }
+        })
+        .then((res)=> {
+          return this._proccessResponse(res);
         });
       }
 
@@ -100,9 +110,10 @@ export default class Api {
         authorization: this._headers.authorization,
         "Content-type": "application/json",
       },
+    })
+    .then((res)=> {
+      return this._proccessResponse(res);
     });
-    likeButtonEl.classList.add("card__heart-button_clicked");
-    return true
   } else if (isLiked) {
     fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
@@ -110,9 +121,10 @@ export default class Api {
         authorization: this._headers.authorization,
         "Content-type": "application/json",
       },
+    })
+    .then((res)=> {
+      return this._proccessResponse(res);
     });
-    likeButtonEl.classList.remove("card__heart-button_clicked");
-    return false;
     }
   };
 }

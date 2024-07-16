@@ -38,13 +38,13 @@ mainApi
   //   return checkServerResponse(res);
   // })
   .then((userData) => {
-    reloadProfile(userData);
+    setAvatar(userData);
   })
   .catch((err) => {
     console.error(err);
   });
 
-const reloadProfile = (userData) => {
+const setAvatar = (userData) => {
   userProfileInfo.setUserInfo(userData.name, userData.about);
   userData.avatar
     ? (document.querySelector(
@@ -92,12 +92,12 @@ const cardSection = new Section(
   ".cards"
 );
 
-const checkServerResponse = (res) => {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Error: ${res.status}`);
-};
+// const checkServerResponse = (res) => {
+//   if (res.ok) {
+//     return res.json();
+//   }
+//   return Promise.reject(`Error: ${res.status}`);
+// };
 
 //api cards
 mainApi
@@ -134,11 +134,12 @@ const createCard = (card) => {
       imagePopUp.open({ cardImgUrl, cardName });
     },
     (cardId) => {
-      console.log("cardId:", cardId);
+      //console.log("cardId:", cardId);
       mainApi.deleteCard(cardId);
     },
     confirmationModal,
     mainApi.toggleCardLike,
+
     // delete confirmation event listeners
     (card) => {
       card._confirmationModal._form.addEventListener("submit", () => {
@@ -151,13 +152,6 @@ const createCard = (card) => {
             card.deleteCard
           );
         });
-      });
-      card._deleteButton.addEventListener("click", () => {
-        card._confirmationModal.open();
-        card._confirmationModal._form.addEventListener(
-          "submit",
-          card.deleteCard
-        );
       });
     },
   );

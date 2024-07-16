@@ -31,5 +31,7 @@ export default class Popup {
     this._popUpElement.addEventListener("click", (evt) => {
       if (!this._popUpBox.contains(evt.target)) this.close();
     });
+
+
   }
 }
