@@ -87,6 +87,10 @@ export default class Api {
 
   }
 
+  getId() {
+
+  }
+  
   deleteCard(cardId) {
     console.log("${this._baseUrl}/cards/${cardId}:",`${this._baseUrl}/cards/${cardId}`);
        return fetch(`${this._baseUrl}/cards/${cardId}`, {
@@ -102,8 +106,8 @@ export default class Api {
       }
 
 
-  toggleCardLike = (cardId,likeButtonEl,isLiked) => {
-    if (!isLiked) {
+  toggleCardLike = (cardId,isLiked) => {
+    if (isLiked) {
       fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: {
@@ -114,7 +118,7 @@ export default class Api {
     .then((res)=> {
       return this._proccessResponse(res);
     });
-  } else if (isLiked) {
+  } else if (!isLiked) {
     fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: {

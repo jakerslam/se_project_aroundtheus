@@ -1,16 +1,16 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithConfirmation extends Popup {
-  constructor(popupSelector, handelConfiirmation) {
+  constructor(popupSelector, handelConfirmation) {
     super(popUpSelector);
     this._popupSelector = popupSelector;
-    this._handelConfiirmation = handelConfiirmation;
+    this.handelConfirmation = handelConfirmation;
     this._form = this._popUpElement.querySelector(".modal__form");
   }
 
 _handleSubmit(evt) {
     evt.preventDefault();
-    this._handelConfiirmation();
+    this.handelConfirmation();
     //this.close();
 }
 

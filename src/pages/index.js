@@ -13,11 +13,12 @@ import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 import {
-  newCardEls,
+  cardFormEls,
   genConfig,
   interfaceEls,
   profileEls,
   apiVars,
+  cardEls,
 } from "../utils/constants.js";
 
 const profilePicFormBtn = document
@@ -34,9 +35,6 @@ const mainApi = new Api({
 
 mainApi
   .getInitialProfile()
-  // .then((res) => {
-  //   return checkServerResponse(res);
-  // })
   .then((userData) => {
     setAvatar(userData);
   })
@@ -65,9 +63,6 @@ const editProfilePicBox = new PopupWithForm("#profile-pic-modal", (picLink) => {
   renderSaveVisual(profilePicFormBtn, true);
   mainApi
     .editProfilePic(picLink["modal__container-input_url"])
-    // .then((res) => {
-    //   checkServerResponse(res);
-    // })
     .then(() => {
       userProfileInfo.setAvatar(picLink["modal__container-input_url"]);
       editProfilePicBox.close();
@@ -92,21 +87,11 @@ const cardSection = new Section(
   ".cards"
 );
 
-// const checkServerResponse = (res) => {
-//   if (res.ok) {
-//     return res.json();
-//   }
-//   return Promise.reject(`Error: ${res.status}`);
-// };
-
 //api cards
 mainApi
   .getInitialCards()
-  // .then((res) => {
-  //   return checkServerResponse(res);
-  // })
   .then((cardObjects) => {
-    console.log("cardObjects:",cardObjects);
+    console.log("cardObjects:", cardObjects);
     cardSection.renderItems(cardObjects);
   })
   .catch((err) => {
@@ -121,41 +106,49 @@ const userProfileInfo = new UserInfo(
 
 const confirmationModal = new PopupWithConfirmation(
   "#confirm-delete-modal",
-  () => {}
+  () => {
+    console.log("Submit handler for confirmationModal");
+  }
 );
+
+const handleDeleteClick = (card) => {
+  confirmationModal.open();
+  confirmationModal._form.addEventListener("submit", () => {
+    card.handleDelete(card._id);
+    confirmationModal.close();
+  });
+  document.addEventListener(confirmationModal.close, () => {
+    confirmationModal._form.removeEventListener(
+      "submit",
+      card.deleteCard
+    );
+  });
+};
 
 confirmationModal.setEventListeners();
 
 const createCard = (card) => {
   const newCard = new Card(
     card,
-    newCardEls.cardTemplate,
-    (cardImgUrl, cardName) => {
-      imagePopUp.open({ cardImgUrl, cardName });
-    },
-    (cardId) => {
-      //console.log("cardId:", cardId);
-      mainApi.deleteCard(cardId);
-    },
-    confirmationModal,
-    mainApi.toggleCardLike,
-
-    // delete confirmation event listeners
-    (card) => {
-      card._confirmationModal._form.addEventListener("submit", () => {
-        card._confirmationModal._handleSubmit();
-        card._confirmationModal.close();
-
-        document.addEventListener(card._confirmationModal.close, () => {
-          card._confirmationModal._form.removeEventListener(
-            "submit",
-            card.deleteCard
-          );
-        });
-      });
-    },
+    cardFormEls.cardTemplate,
+    handleImageClick,
+    deleteCard,
+    toggleCardLike,
+    handleDeleteClick
   );
   return newCard.generateCard();
+};
+
+const toggleCardLike = (cardId, isLiked) => {
+  mainApi.toggleCardLike(cardId, isLiked);
+};
+
+const handleImageClick = (cardImgUrl, cardName) => {
+  imagePopUp.open({ cardImgUrl, cardName });
+};
+
+const deleteCard = (cardId) => {
+  mainApi.deleteCard(cardId);
 };
 
 const createValidator = (modal) => {
@@ -207,8 +200,8 @@ function addCard(inputValues) {
   const cardData = { name: title, link: url };
   const newCard = createCard(cardData);
   cardSection.addItem(newCard);
-  newCardEls.cardForm.reset();
-  renderSaveVisual(newCardEls.cardSubmit, true);
+  cardFormEls.cardForm.reset();
+  renderSaveVisual(cardFormEls.cardSubmit, true);
   mainApi
     .postCard(cardData)
     // .then((res) => {
@@ -218,7 +211,7 @@ function addCard(inputValues) {
       newCardForm.close();
     })
     .finally(() => {
-      renderSaveVisual(newCardEls.cardSubmit, false, "Create");
+      renderSaveVisual(cardFormEls.cardSubmit, false, "Create");
     });
 }
 

@@ -1,11 +1,17 @@
-
-export const newCardEls = {
+export const cardFormEls = {
   cardModal: document.querySelector("#card-modal"),
   cardForm: document.forms["card-form"],
-  cardSubmit: document.querySelector("#card-modal").querySelector(".modal__container-button"),
+  cardSubmit: document
+    .querySelector("#card-modal")
+    .querySelector(".modal__container-button"),
   titleInput: document.querySelector(".modal__container-input_card-title-js"),
   linkInput: document.querySelector(".modal__container-input_card-url-js"),
   cardTemplate: document.querySelector("#cardTemplate").content,
+};
+
+export const cardEls = {
+  deleteButton: document.querySelectorAll(".card__delete-button"),
+  likeButton: document.querySelectorAll(".card__heart-button"),
 };
 
 export const genConfig = {
@@ -24,11 +30,15 @@ export const interfaceEls = {
 
 export const profileEls = {
   editProfileModal: document.querySelector("#edit-modal"),
-  nameInput: document.querySelector("#edit-modal").querySelector(".modal__container-input_name"),
-  editProfileButton: document.querySelector("#edit-modal").querySelector(".modal__container-button"),
-  profileBioInputEl: document.querySelector("#edit-modal").querySelector(
-    ".modal__container-input_bio"
-  ),
+  nameInput: document
+    .querySelector("#edit-modal")
+    .querySelector(".modal__container-input_name"),
+  editProfileButton: document
+    .querySelector("#edit-modal")
+    .querySelector(".modal__container-button"),
+  profileBioInputEl: document
+    .querySelector("#edit-modal")
+    .querySelector(".modal__container-input_bio"),
   profileNameEl: document.querySelector(".profile__author-title"),
   profileBioEl: document.querySelector(".profile__subtext"),
   profilePic: document.querySelector(".profile__author-img"),
@@ -37,4 +47,4 @@ export const profileEls = {
 export const apiVars = {
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   apiToken: "99084de7-d532-4ca6-836e-6f6bea8ffc16",
-}
+};
