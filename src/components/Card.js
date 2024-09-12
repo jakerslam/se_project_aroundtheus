@@ -3,7 +3,7 @@ export default class Card {
     data,
     cardTemplate,
     handleImageClick,
-    handleAPIDelete,
+    deleteCard,
     cardLikeHandeler,
     handleDeleteClick
   ) {
@@ -19,7 +19,7 @@ export default class Card {
     );
     this._cardImage = this._cardElement.querySelector(".card__img");
     this._cardTitle = this._cardElement.querySelector(".card__title");
-    this._handleAPIDelete = handleAPIDelete;
+    this._deleteCard = deleteCard;
     this._cardLikeHandeler = cardLikeHandeler;
     this._handleDeleteClick = handleDeleteClick;
   }
@@ -27,7 +27,7 @@ export default class Card {
   handleDelete = (cardId) => {
     this._cardElement.remove();
     this._cardElement = null;
-    this._handleAPIDelete(cardId);
+    this._deleteCard(this);
   };
 
   _setEventListeners() {
@@ -57,16 +57,22 @@ export default class Card {
   };
   
   renderLikes = () => {
-    console.log("this.id:",this._id);
-    this._cardLikeHandeler(this._id, this._isLiked);
+    if (this._id) {  
+      console.log("checking api for isLiked");
+      this._cardLikeHandeler(this._id, this._isLiked);
     if (this.isLiked()) {
       this._likeButton.classList.add("card__heart-button_clicked");
     } else if (!this.isLiked()) {
       this._likeButton.classList.remove("card__heart-button_clicked");
     }
+    } else {
+      console.log("new card has no id yet, it is ",this._id);
+      this._isLiked = false;
+    }
   }
 
   generateCard = () => {
+    //console.log("cardId in generateCard: ", this._id);
     this.renderLikes();
     this._cardImage.src = this._cardImgUrl;
     this._cardImage.alt = "An image of " + this._cardName;

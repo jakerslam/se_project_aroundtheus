@@ -106,23 +106,28 @@ const userProfileInfo = new UserInfo(
 
 const confirmationModal = new PopupWithConfirmation(
   "#confirm-delete-modal",
-  () => {
-    console.log("Submit handler for confirmationModal");
-  }
+  ()=>{}
 );
-
+confirmationModal.setSubmitAction(()=>{});
+//console.log("confirmationModal.handleConfirmation:",confirmationModal.handleConfirmation);
 const handleDeleteClick = (card) => {
+  console.log("card id in handleDeleteClick:",card._id);
   confirmationModal.open();
-  confirmationModal._form.addEventListener("submit", () => {
-    card.handleDelete(card._id);
-    confirmationModal.close();
-  });
-  document.addEventListener(confirmationModal.close, () => {
-    confirmationModal._form.removeEventListener(
-      "submit",
-      card.deleteCard
-    );
-  });
+  // confirmationModal.setSubmitAction(() => {
+  //   console.log("Submit handler for confirmationModal");
+  //   confirmationModal.close();
+  //   card.handleDelete();
+  // });
+  // confirmationModal._form.addEventListener(
+  //   "submit",
+  //   card.handleDelete
+  // );
+  // confirmationModal.addEventListener(confirmationModal.close, () =>
+  //   confirmationModal._form.removeEventListener(
+  //     "submit",
+  //     card.handleDelete
+  //   )
+  // );
 };
 
 confirmationModal.setEventListeners();
@@ -147,8 +152,15 @@ const handleImageClick = (cardImgUrl, cardName) => {
   imagePopUp.open({ cardImgUrl, cardName });
 };
 
-const deleteCard = (cardId) => {
-  mainApi.deleteCard(cardId);
+const deleteCard = (card) => {
+  console.log("deleteCard in index");
+  mainApi.deleteCard(card._id);
+  confirmationModal.close();
+  confirmationModal._handleSubmit();
+  confirmationModal._form.removeEventListener(
+    "submit",
+    card.handleDelete
+  );
 };
 
 const createValidator = (modal) => {
@@ -236,6 +248,7 @@ const addInitEventListeners = () => {
   editProfileForm.setEventListeners();
   imagePopUp.setEventListeners();
   editProfilePicBox.setEventListeners();
+  confirmationModal.setEventListeners();
 };
 
 addValidators();
