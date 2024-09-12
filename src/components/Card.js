@@ -58,7 +58,6 @@ export default class Card {
   
   renderLikes = () => {
     if (this._id) {  
-      console.log("checking api for isLiked");
       this._cardLikeHandeler(this._id, this._isLiked);
     if (this.isLiked()) {
       this._likeButton.classList.add("card__heart-button_clicked");
@@ -66,13 +65,11 @@ export default class Card {
       this._likeButton.classList.remove("card__heart-button_clicked");
     }
     } else {
-      console.log("new card has no id yet, it is ",this._id);
       this._isLiked = false;
     }
   }
 
   generateCard = () => {
-    //console.log("cardId in generateCard: ", this._id);
     this.renderLikes();
     this._cardImage.src = this._cardImgUrl;
     this._cardImage.alt = "An image of " + this._cardName;

@@ -7,7 +7,7 @@ import "./index.css";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
-import PopupWithConfirmation from "../components/PopupWithForm.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
@@ -91,7 +91,6 @@ const cardSection = new Section(
 mainApi
   .getInitialCards()
   .then((cardObjects) => {
-    console.log("cardObjects:", cardObjects);
     cardSection.renderItems(cardObjects);
   })
   .catch((err) => {
@@ -105,36 +104,19 @@ const userProfileInfo = new UserInfo(
 );
 
 const confirmationModal = new PopupWithConfirmation(
-  "#confirm-delete-modal",
-  ()=>{}
+  "#confirm-delete-modal"
 );
 
-const randomFunction = ()=> {
-  console.log("random function");
-}
-//confirmationModal.setSubmitAction(randomFunction);
-//console.log("confirmationModal.handleConfirmation:",confirmationModal.handleConfirmation);
 const handleDeleteClick = (card) => {
-  console.log("card id in handleDeleteClick:",card._id);
+
   confirmationModal.open();
-  // confirmationModal.setSubmitAction(() => {
-  //   console.log("Submit handler for confirmationModal");
-  //   confirmationModal.close();
-  //   card.handleDelete();
-  // });
-  // confirmationModal._form.addEventListener(
-  //   "submit",
-  //   card.handleDelete
-  // );
-  // confirmationModal.addEventListener(confirmationModal.close, () =>
-  //   confirmationModal._form.removeEventListener(
-  //     "submit",
-  //     card.handleDelete
-  //   )
-  // );
+  confirmationModal.setSubmitAction(() => {
+    confirmationModal.close();
+    card.handleDelete();
+  });
+
 };
 
-confirmationModal.setEventListeners();
 
 const createCard = (card) => {
   const newCard = new Card(
@@ -157,14 +139,8 @@ const handleImageClick = (cardImgUrl, cardName) => {
 };
 
 const deleteCard = (card) => {
-  console.log("deleteCard in index");
   mainApi.deleteCard(card._id);
   confirmationModal.close();
-  confirmationModal._handleSubmit();
-  confirmationModal._form.removeEventListener(
-    "submit",
-    card.handleDelete
-  );
 };
 
 const createValidator = (modal) => {
