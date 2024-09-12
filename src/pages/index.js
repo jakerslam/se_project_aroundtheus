@@ -108,7 +108,11 @@ const confirmationModal = new PopupWithConfirmation(
   "#confirm-delete-modal",
   ()=>{}
 );
-confirmationModal.setSubmitAction(()=>{});
+
+const randomFunction = ()=> {
+  console.log("random function");
+}
+//confirmationModal.setSubmitAction(randomFunction);
 //console.log("confirmationModal.handleConfirmation:",confirmationModal.handleConfirmation);
 const handleDeleteClick = (card) => {
   console.log("card id in handleDeleteClick:",card._id);
