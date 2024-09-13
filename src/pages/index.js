@@ -190,8 +190,6 @@ function addCard(inputValues) {
   const title = inputValues["modal__container-input_title"];
   const url = inputValues["modal__container-input_url"];
   const cardData = { name: title, link: url };
-  const newCard = createCard(cardData);
-  cardSection.addItem(newCard);
   cardFormEls.cardForm.reset();
   renderSaveVisual(cardFormEls.cardSubmit, true);
   mainApi
@@ -199,7 +197,9 @@ function addCard(inputValues) {
     // .then((res) => {
     //   return checkServerResponse(res);
     // })
-    .then(() => {
+    .then(( card) => {
+      const newCard = createCard(card);
+      cardSection.addItem(newCard);
       newCardForm.close();
     })
     .finally(() => {

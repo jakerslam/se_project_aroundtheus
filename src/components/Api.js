@@ -92,6 +92,7 @@ export default class Api {
   }
   
   deleteCard(cardId) {
+    console.log("cardId: ",cardId);
        return fetch(`${this._baseUrl}/cards/${cardId}`, {
           method: "DELETE",
           headers: {
