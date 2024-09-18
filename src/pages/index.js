@@ -36,19 +36,14 @@ const mainApi = new Api({
 mainApi
   .getInitialProfile()
   .then((userData) => {
-    setAvatar(userData);
+    setUserInfo(userData);
   })
   .catch((err) => {
     console.error(err);
   });
 
-const setAvatar = (userData) => {
-  userProfileInfo.setUserInfo(userData.name, userData.about);
-  userData.avatar
-    ? (document.querySelector(
-        ".profile__author-img"
-      ).src = `${userData.avatar}`)
-    : false;
+const setUserInfo = (userData) => {
+  userProfileInfo.setUserInfo(userData.name, userData.about, userData.avatar);
 };
 
 const editProfileForm = new PopupWithForm("#edit-modal", (inputValues) => {
@@ -103,29 +98,30 @@ const userProfileInfo = new UserInfo(
   profileEls.profilePic
 );
 
-const confirmationModal = new PopupWithConfirmation(
-  "#confirm-delete-modal"
-);
+const confirmationModal = new PopupWithConfirmation("#confirm-delete-modal");
 
-const handleDeleteClick = (card) => {
-
+const openDelConfirmation = (card) => {
   confirmationModal.open();
   confirmationModal.setSubmitAction(() => {
-    confirmationModal.close();
-    card.handleDelete();
+    mainApi
+      .deleteCard(card._id)
+      .then(() => {
+        card.handleDelete();
+        confirmationModal.close();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   });
-
 };
-
 
 const createCard = (card) => {
   const newCard = new Card(
     card,
     cardFormEls.cardTemplate,
     handleImageClick,
-    deleteCard,
     toggleCardLike,
-    handleDeleteClick
+    openDelConfirmation
   );
   return newCard.generateCard();
 };
@@ -136,11 +132,6 @@ const toggleCardLike = (cardId, isLiked) => {
 
 const handleImageClick = (cardImgUrl, cardName) => {
   imagePopUp.open({ cardImgUrl, cardName });
-};
-
-const deleteCard = (card) => {
-  mainApi.deleteCard(card._id);
-  confirmationModal.close();
 };
 
 const createValidator = (modal) => {
@@ -156,25 +147,27 @@ function fillProfileInputs() {
 }
 
 function saveEditProfileForm(inputValues) {
-  userProfileInfo.setUserInfo(
-    inputValues["modal__container-input_name"],
-    inputValues["modal__container-input_bio"]
-  );
-  profileEls.profileBioInputEl.value = "";
-  profileEls.nameInput.value = "";
   const userData = {
     name: inputValues["modal__container-input_name"],
     about: inputValues["modal__container-input_bio"],
   };
-
   renderSaveVisual(profileEls.editProfileButton, true);
   mainApi
     .postProfileItem(userData)
     .then(() => {
+      userProfileInfo.setUserInfo(
+        inputValues["modal__container-input_name"],
+        inputValues["modal__container-input_bio"]
+      );
       editProfileForm.close();
+    })
+    .catch((err) => {
+      console.error(err);
     })
     .finally(() => {
       renderSaveVisual(profileEls.editProfileButton, false);
+      // profileEls.profileBioInputEl.value = "";
+      // profileEls.nameInput.value = "";
     });
 }
 
@@ -190,20 +183,20 @@ function addCard(inputValues) {
   const title = inputValues["modal__container-input_title"];
   const url = inputValues["modal__container-input_url"];
   const cardData = { name: title, link: url };
-  cardFormEls.cardForm.reset();
   renderSaveVisual(cardFormEls.cardSubmit, true);
   mainApi
     .postCard(cardData)
-    // .then((res) => {
-    //   return checkServerResponse(res);
-    // })
-    .then(( card) => {
+    .then((card) => {
       const newCard = createCard(card);
       cardSection.addItem(newCard);
       newCardForm.close();
     })
+    .catch((err) => {
+      console.error(err);
+    })
     .finally(() => {
       renderSaveVisual(cardFormEls.cardSubmit, false, "Create");
+      cardFormEls.cardForm.reset();
     });
 }
 

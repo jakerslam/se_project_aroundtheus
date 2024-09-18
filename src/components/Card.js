@@ -3,9 +3,8 @@ export default class Card {
     data,
     cardTemplate,
     handleImageClick,
-    deleteCard,
     cardLikeHandeler,
-    handleDeleteClick
+    openDelConfirmation
   ) {
     this._handleImageClick = handleImageClick;
     this._cardImgUrl = data.link;
@@ -19,15 +18,13 @@ export default class Card {
     );
     this._cardImage = this._cardElement.querySelector(".card__img");
     this._cardTitle = this._cardElement.querySelector(".card__title");
-    this._deleteCard = deleteCard;
     this._cardLikeHandeler = cardLikeHandeler;
-    this._handleDeleteClick = handleDeleteClick;
+    this._openDelConfirmation = openDelConfirmation;
   }
 
-  handleDelete = (cardId) => {
+  handleDelete = () => {
     this._cardElement.remove();
     this._cardElement = null;
-    this._deleteCard(this);
   };
 
   _setEventListeners() {
@@ -38,7 +35,7 @@ export default class Card {
     });
 
     this._deleteButton.addEventListener("click", () => {
-      this._handleDeleteClick(this);
+      this._openDelConfirmation(this);
     });
 
   }

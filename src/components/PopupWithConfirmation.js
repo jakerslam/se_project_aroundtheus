@@ -20,14 +20,12 @@ _handleSubmit(evt) {
         if (this.handleConfirmation) {
       this.handleConfirmation();
     }
-    //this.close();
 }
 
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener("submit", (evt) => {
       this._handleSubmit(evt);
-      this.close();
     });
   }
 }

@@ -15,34 +15,33 @@ export default class Api {
   getInitialProfile() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
-      headers: {
-        authorization: this._headers.authorization,
-      },
+      headers: this._headers,
     })
     .then((res)=> {
       return this._proccessResponse(res);
+    })  
+    .catch((err) => {
+      console.error(err);
     });
   }
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       method: "GET",
-      headers: {
-        authorization: this._headers.authorization,
-      },
+      headers: this._headers,
     })
     .then((res)=> { 
       return this._proccessResponse(res);
+    })  
+    .catch((err) => {
+      console.error(err);
     });
   }
 
   postProfileItem(item) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: {
-        authorization: this._headers.authorization,
-        "Content-Type": "application/json",
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: item.name,
         about: item.about,
@@ -50,16 +49,16 @@ export default class Api {
     })
     .then((res)=> {
       return this._proccessResponse(res);
+    })  
+    .catch((err) => {
+      console.error(err);
     });
   }
 
   postCard(cardData) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
-      headers: {
-        authorization: this._headers.authorization,
-        "Content-Type": "application/json",
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: cardData.name,
         link: cardData.link,
@@ -67,41 +66,43 @@ export default class Api {
     })
     .then((res)=> {
       return this._proccessResponse(res);
+    })  
+    .catch((err) => {
+      console.error(err);
     });
   }
 
   editProfilePic(link) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
-      headers: {
-        authorization: this._headers.authorization,
-        "Content-Type": "application/json",
-      },
+      headers: this._headers,
       body: JSON.stringify({
         avatar:link,
       })    
     })
     .then((res)=> {
       return this._proccessResponse(res);
+    })  
+    .catch((err) => {
+      console.error(err);
     });
 
   }
 
-  getId() {
-
-  }
+  // getId() {
+  // }
   
   deleteCard(cardId) {
     console.log("cardId: ",cardId);
        return fetch(`${this._baseUrl}/cards/${cardId}`, {
           method: "DELETE",
-          headers: {
-            authorization: this._headers.authorization,
-            "Content-Type": "application/json",
-          }
+          headers: this._headers
         })
         .then((res)=> {
           return this._proccessResponse(res);
+        })  
+        .catch((err) => {
+          console.error(err);
         });
       }
 
@@ -110,24 +111,24 @@ export default class Api {
     if (isLiked) {
       fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
-      headers: {
-        authorization: this._headers.authorization,
-        "Content-type": "application/json",
-      },
+      headers: this._headers,
     })
     .then((res)=> {
       return this._proccessResponse(res);
+    })  
+    .catch((err) => {
+      console.error(err);
     });
   } else if (!isLiked) {
     fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
-      headers: {
-        authorization: this._headers.authorization,
-        "Content-type": "application/json",
-      },
+      headers: this._headers,
     })
     .then((res)=> {
       return this._proccessResponse(res);
+    })  
+    .catch((err) => {
+      console.error(err);
     });
     }
   };
