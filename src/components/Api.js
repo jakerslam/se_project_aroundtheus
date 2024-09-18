@@ -24,7 +24,7 @@ export default class Api {
       console.error(err);
     });
   }
-
+//lala
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       method: "GET",
