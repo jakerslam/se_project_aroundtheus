@@ -12,6 +12,10 @@ export default class Api {
     return Promise.reject(`Error: ${res.status}`); 
   }
 
+  _request(url,options) {
+    return (url,options)
+    .then(_proccessResponse)
+  }
   getInitialProfile() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
