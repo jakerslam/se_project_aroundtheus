@@ -137,6 +137,7 @@ const handleImageClick = (cardImgUrl, cardName) => {
 const createValidator = (modal) => {
   const newValidator = new FormValidator(genConfig, modal);
   newValidator.enableValidation();
+  console.log(newValidator);
   return newValidator;
 };
 
@@ -160,7 +161,8 @@ function saveEditProfileForm(inputValues) {
         inputValues["modal__container-input_bio"]
       );
       editProfileForm.close();
-    })
+      formValidators['editProfileForm'].resetValidation();
+        })
     .catch((err) => {
       console.error(err);
     })
@@ -190,19 +192,20 @@ function addCard(inputValues) {
       const newCard = createCard(card);
       cardSection.addItem(newCard);
       newCardForm.close();
+      cardFormEls.cardForm.reset();
     })
     .catch((err) => {
       console.error(err);
     })
     .finally(() => {
       renderSaveVisual(cardFormEls.cardSubmit, false, "Create");
-      cardFormEls.cardForm.reset();
+      //newValidator.resetValidation();
     });
 }
 
 const addValidators = () => {
-  Array.from(document.querySelectorAll(".modal")).forEach((modal) => {
-    createValidator(modal);
+  return Array.from(document.querySelectorAll(".modal")).forEach((modal) => {
+    formValidators[modal] = createValidator(modal);
   });
 };
 
@@ -224,5 +227,7 @@ const addInitEventListeners = () => {
   confirmationModal.setEventListeners();
 };
 
+const formValidators = {};
 addValidators();
+console.log("formValidators: ",formValidators);
 addInitEventListeners();

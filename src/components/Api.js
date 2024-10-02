@@ -12,6 +12,13 @@ export default class Api {
     return Promise.reject(`Error: ${res.status}`); 
   }
 
+  _request(url,options) {
+    return fetch(url, options)
+    .then((res)=> {
+      return this._proccessResponse(res);
+    })  
+  }
+
   getInitialProfile() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
@@ -20,9 +27,11 @@ export default class Api {
     .then((res)=> {
       return this._proccessResponse(res);
     })  
-    .catch((err) => {
-      console.error(err);
-    });
+  //  this. _request(`${this._baseUrl}/users/me`, {
+  //   method: "GET",
+  //   headers: this._headers,
+  // })
+    ;
   }
 
   getInitialCards() {
@@ -33,9 +42,7 @@ export default class Api {
     .then((res)=> { 
       return this._proccessResponse(res);
     })  
-    .catch((err) => {
-      console.error(err);
-    });
+    ;
   }
 
   postProfileItem(item) {
@@ -50,9 +57,7 @@ export default class Api {
     .then((res)=> {
       return this._proccessResponse(res);
     })  
-    .catch((err) => {
-      console.error(err);
-    });
+    ;
   }
 
   postCard(cardData) {
@@ -67,9 +72,7 @@ export default class Api {
     .then((res)=> {
       return this._proccessResponse(res);
     })  
-    .catch((err) => {
-      console.error(err);
-    });
+    ;
   }
 
   editProfilePic(link) {
@@ -83,9 +86,7 @@ export default class Api {
     .then((res)=> {
       return this._proccessResponse(res);
     })  
-    .catch((err) => {
-      console.error(err);
-    });
+    ;
 
   }
 
@@ -116,9 +117,7 @@ export default class Api {
     .then((res)=> {
       return this._proccessResponse(res);
     })  
-    .catch((err) => {
-      console.error(err);
-    });
+    ;
   } else if (!isLiked) {
     fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
@@ -127,9 +126,7 @@ export default class Api {
     .then((res)=> {
       return this._proccessResponse(res);
     })  
-    .catch((err) => {
-      console.error(err);
-    });
+    ;
     }
   };
 }
