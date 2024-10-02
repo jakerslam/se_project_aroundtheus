@@ -102,9 +102,6 @@ export default class Api {
         .then((res)=> {
           return this._proccessResponse(res);
         })  
-        .catch((err) => {
-          console.error(err);
-        });
       }
 
 

@@ -161,7 +161,7 @@ function saveEditProfileForm(inputValues) {
         inputValues["modal__container-input_bio"]
       );
       editProfileForm.close();
-      formValidators['editProfileForm'].resetValidation();
+      //formValidators['editProfileForm'].resetValidation();
         })
     .catch((err) => {
       console.error(err);
